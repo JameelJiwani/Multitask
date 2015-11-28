@@ -6,6 +6,7 @@ body{
 #gameContainer {
   position: absolute;
   background-image: url(/assets/img/pink_rice.png);
+  text-align: center;
   display: flex;
   height: 100vh;
   width: 100vw;
@@ -17,21 +18,59 @@ body{
     color: #6496c8;
     background: rgba(0,0,0,0);
     border: solid 5px #6496c8;
-    border-radius: 20px;
-    z-index: 3;
+    border-radius: 100px;
     text-align: center;
+    font-size: 400%;
+    padding: 1%;
 }
 
-#startbutton:hover{
+#timer {
+    width: 100%;
+}
+
+.buttonContainer {
+    width: 100%;
+    background-color: blue;
+    display: block;
+}
+
+.buttonContainer:hover #startbutton {
     color: white;
     background: #6496c8;
+}
+
+@-webkit-keyframes pulse_animation {
+	0% { -webkit-transform: scale(1); }
+	10% { -webkit-transform: scale(1.02); }
+	20% { -webkit-transform: scale(1.04); }
+	30% { -webkit-transform: scale(1.06); }
+	40% { -webkit-transform: scale(1.08); }
+	50% { -webkit-transform: scale(1.1); }
+	60% { -webkit-transform: scale(1.08); }
+	70% { -webkit-transform: scale(1.06); }
+	80% { -webkit-transform: scale(1.04); }
+	90% { -webkit-transform: scale(1.02); }
+	100% { -webkit-transform: scale(1); }
+}
+
+.pulse {
+	-webkit-animation-name: 'pulse_animation';
+	-webkit-animation-duration: 900ms;
+	-webkit-transform-origin:70% 70%;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+	display: blue;
+	width: 100%;
 }
 
 #gameFrame{
     position: fixed;
     z-index: 0;
-    height: 100vh;
-    width: 100vw;
     top:0px;
     left:0px;
+}
+
+#synopsis{
+    display: block;
+    width: 100%;
 }
