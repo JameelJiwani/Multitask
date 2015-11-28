@@ -1,6 +1,5 @@
-var g_track = [-1,1];
-var enemeyStreamline;
-var enemeyStreamNum = 1; 
+var enemyStreamline;
+var enemyStreamNum = 1; 
 var enemyPool = new Array();
 var enemyCurvePool = new Array();
  
@@ -44,8 +43,8 @@ canvas.Scene.new({
 	        return entity;
 	     }
 	     
-	     enemeyStreamline = setInterval(addEntities(40, 10, con), enemeyStreamNum);
-	     clearInterval(enemeyStreamline);
+	     enemyStreamline = setInterval(addEntities(40, 10, con), enemyStreamNum);
+	     //clearInterval(enemyStreamline);
 	},
 	
 	render: function(stage){

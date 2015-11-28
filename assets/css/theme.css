@@ -22,17 +22,19 @@ body{
     border-radius: 100px;
     text-align: center;
     font-size: 400%;
+    cursor: pointer;
 }
 
 #timer {
-    position: fixed;
+    
 }
 
 .buttonContainer {
     width: 100%;
+    z-index: 2;
 }
 
-.buttonContainer:hover #startbutton {
+#startbutton:hover {
     color: white;
     background: #6496c8;
 }
@@ -61,10 +63,7 @@ body{
 
 #gameFrame{
     position: fixed;
-    z-index: 0;
+    z-index: 1;
     top:0px;
     left:0px;
-}
-
-#synopsis{
 }
