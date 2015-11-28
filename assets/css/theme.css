@@ -1,0 +1,8 @@
+body{
+    background-color: #ecf0f1;
+}
+#gameContainer {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+}
