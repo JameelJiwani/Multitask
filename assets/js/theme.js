@@ -5,61 +5,124 @@
     			canvas.Scene.call("gameScene");
     });	
     
+function gameStart(){
+    //BEGIN POINTS
+    //BEGIN SHAPES AND QUESTIONS
+    //FIND WAY TO HAVE QUESTIONS AT THE START
+}
     
+function spawnAnEnemy(){
+    var difficulty = 3;
+    var randNum = Math.floor(Math.random() * difficulty) + 1;
     
-    
-    
-    
-    
-    canvas.Scene.new({
-    	name: "gameScene",
-    	materials: {
-            // Usually put relatives links
-    		images: {
-                // For CanvasEngine load "bar" first, we add index property
-                "preloader": {path: "http://rsamaium.github.io/CanvasEngine/samples/preload/images/bar_full.jpg", index: 0},
-                "1": "http://rsamaium.github.io/CanvasEngine/samples/preload/images/1.jpg",
-                "2": "http://rsamaium.github.io/CanvasEngine/samples/preload/images/2.jpg",
-                "3": "http://rsamaium.github.io/CanvasEngine/samples/preload/images/3.jpg"
-    		}
-    	},
-    	called: function(stage) {
-            // Initialize an element
-    		this.el = this.createElement();
-    		stage.append(this.el);
-    	},
-    	preload: function(stage, pourcent, material) {
-    		this.el.drawImage("gameScene", 0, 0, pourcent + "%");
-    	},
-    	ready: function(stage) {
-            this.element = this.createElement();
-            this.element.drawImage("1");
-            stage.append(this.element);
-            canvas.Input.keyDown(Input.A, function(e) {
-                console.log("A is pressed");
-            });
-            function addEntities(x, y) {
-                var entity = Class.New("Entity", [stage]);
-                entity.rect(100); // square
-                entity.position(x, y);
-                entity.el.fillStyle = "red";
-                entity.el.fillRect(0, 0, 100, 100);
-                stage.append(entity.el);
-                return entity;
-             }
+    if (randNum == 1) {
+        //Spawn number question
+        var a, b, plusMinus, answer;
+        var isOneDig = true;
         
-             this.entityA = addEntities(0, 10);
-             this.entityB = addEntities(300, 10);
-    	},
-    	render: function(stage){
-    	    this.entityA.move(5, 10); // x += 5;
-            this.entityA.hit([this.entityB], function(state, el) {
-                if (state == "over") {
-                  el.fillStyle = "green";
-                  el.fillRect(0, 0, 100, 100);
-                }
-            });
-            stage.refresh();
-    	}
-    });	
+        a = Math.floor(Math.random() * 20) + 1;
+        b = Math.floor(Math.random() * 20) + 1;
+        plusMinus = Math.floor(Math.random() * 2);
+        if(plusMinus == 1){
+            answer = a + b;
+            if((a+b) > 9 || (a+b) < 0){
+                isOneDig(false);
+                //WHAT DOES FALSE DO? SHOULD COME UP WITH TWO NEW NUMBERS
+            } else {
+                //CHECK ANSWER
+            }
+        } else {
+            answer = a - b;
+            if((a-b) > 9 || (a-b) < 0){
+                isOneDig(false);
+            } else {
+                //CHECK ANSWER
+            }
+        }
+    } else if (randNum == 2){
+        //Spawn spelling question
+        //Make array of words to use, a random integer will be selected for charAt
+        var words = ["Estonia", "drive", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
+        var chosen = (Math.floor(Math.random() * 10)) + 0;
+        var limit = words[chosen].length;
+        var character = Math.floor(Math.random() * limit) + 0;
+        var answer = chosen[character];
+        //STATE QUESTION
+        document.write("What is letter number " + character + " in the word " + chosen + "?");
+        //CHECK ANSWER
+    } else { 
+        //Spawn rectangle
+    }
+} 
+    
+
+    
+
+canvas.Scene.new({
+    name: "gameScene",
+    materials: {
+        // Usually put relatives links
+    	images: {
+            "bg": {path: "../assets/img/background.png", index: 0}
+		}
+	},/*
+	called: function(stage) { 
+		
+	},
+	preload: function(stage, pourcent, material){
+		
+	},*/
+	ready: function(stage) {
+		
+		function addEntities(x, y) {
+	        var entity = Class.New("Entity", [stage]);
+	        entity.rect(10); // square
+	        entity.position(x, y);
+	        entity.el.fillStyle = "red";
+	        entity.el.fillRect(0, 0, 10, 10);
+	        stage.append(entity.el);
+	        return entity;
+	     }
+	     
+	     this.entityA = addEntities(0, 10);
+	     this.entityB = addEntities(50, 10);
+       
+	},
+	
+	render: function(stage) {
+		
+	    this.entityA.move(5,1); // x += 5;
+		this.getCan.onmousemove(function(e){
+			alert("Yay");
+		});
+	    this.entityA.hit([this.entityB], function(state, el) {
+	        if (state == "over") {
+	          el.fillStyle = "green";
+	          el.fillRect(0, 0, 10, 10);
+	        }
+	    });
+	    stage.refresh();
+	  }
+});
+    
+function enemyGenerate(){
+	var randomNum = Math.floor(Math.random()*3);
+	var spawnRate;
+	
+	if(randomNum == 1){
+		spawnRate = 1;
+		
+	} else if(randomNum == 2){
+		spawnRate = 3;
+		
+	} else {
+		spawnRate = 5;
+	}
+	
+	//Calls spawnAnEnemy, where actual enemies are created
+ 	for(var i = 0; i < spawnRate; i++){
+ 	    spawnAnEnemy();
+ 	}
+	
+}
     
