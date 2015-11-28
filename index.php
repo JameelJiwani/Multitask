@@ -9,9 +9,9 @@
 <body>
     <div id="gameContainer">
         <canvas id="gameFrame"></canvas>
-        <div id="timer"><span class="value">0</span> ms</div>
+        <div id="timer"><span class="value">0</span></div>
         <div class="buttonContainer"><button type="button" id="startbutton" onclick="gameStart()">START</button></div>
-        <h3 id="synopsis">The point of this game is to avoid the objects flying at you while answering simple questions. Can you multitask as well as you think?</h3>
+        <h3 id="synopsis">The point of this game is to avoid the objects flying at you while answering simple questions. Can you multitask as well as you think you can?</h3>
     </div>
    
     <script type="text/javascript" src="assets/js/theme.js"></script>
@@ -21,6 +21,7 @@
             $("button").click(function(){
                 $("#startbutton").fadeOut("slow");
                 $("#synopsis").fadeOut("slow");
+                $("#timer").css("opacity", "1");
                 $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
 
             });

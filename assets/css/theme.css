@@ -19,14 +19,15 @@ body{
     color: #6496c8;
     background: rgba(0,0,0,0);
     border: solid 5px #6496c8;
-    border-radius: 100px;
+    border-radius: 40px;
     text-align: center;
     font-size: 400%;
     cursor: pointer;
 }
 
 #timer {
-    
+    font-size: 300%;
+    opacity: 0;
 }
 
 .buttonContainer {

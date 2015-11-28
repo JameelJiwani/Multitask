@@ -56,6 +56,7 @@ canvas.Scene.new({
 	       alert(update[0]+","+ update[1]);
     	   enemyPool[i].move(update[0], update[1]); // x += 5;
     	}
+    	
     	stage.refresh();
 	}
 });
