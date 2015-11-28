@@ -1,7 +1,8 @@
 var g_track = [-1,1];
 var enemeyStreamline;
-var enemeyStreamNum = 0; 
-
+var enemeyStreamNum = 1; 
+var enemyPool = {}; 
+ 
 var canvas = CE.defines("gameFrame").
     extend(Input).
     extend(Hit).
@@ -19,14 +20,12 @@ canvas.Scene.new({
 	},
 	called: function(stage) { 
 		$("#gameFrame").height($(window).height()).width($(window).width());
-	},
+	},/*
 	preload: function(stage, pourcent, material){
 		
-	},
+	},*/
 	ready: function(stage) {
-	    
-	    //var enemyPool = []; 
-	
+	    var con = this;
 		function addEntities(x, y, self) {
 	        var entity = Class.New("Entity", [stage]);
 	        entity.rect(100); // square
@@ -34,24 +33,29 @@ canvas.Scene.new({
             entity.el = self.createElement(100, 100);
 	        entity.el.fillStyle = "red";
 	        entity.el.fillRect(0, 0, 100, 100);
-	        stage.append(entity.el);
 	        entity.el.on("mouseover", function(e){
                 alert("lol");
                 //ahhhhhhhhh
             });
-            //enemyPool.append(entity);
+            stage.append(entity.el);
+            enemyPool.push({
+                key: entity,
+                value: [-1,1]
+            });
 	        return entity;
 	     }
-	     enemeyStreamline = setInterval(addEntities(400, 10, this), enemeyStreamNum);
+	     
+	     enemeyStreamline = setInterval(addEntities(40, 10, con), enemeyStreamNum);
+	     clearInterval(enemeyStreamline);
 	},
 	
 	render: function(stage){
 	    curve(3.14, 0.001);
-	    for (e in enemyPool){
-	        e.entityA.move(g_track[0], g_track[1]); // x += 5;
-	    }
-	    stage.refresh();
-	  }
+	    for (var e in enemyPool){
+    	   e.move(g_track[0], g_track[1]); // x += 5;
+    	}
+    	stage.refresh();
+	}
 });
 
 
@@ -64,7 +68,7 @@ function curve(p_curve, rate){
 }
 
 
-    
+
 function gameStart(){
     startTimer();
     //BEGIN SHAPES AND QUESTIONS
