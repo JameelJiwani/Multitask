@@ -16,6 +16,9 @@ canvas.Scene.new({
         // Usually put relatives links
     	images: {
             "bg": {path: "../assets/img/background.png", index: 0}
+		},
+		sounds: {
+		    soundTrack: "../assets/audio/SoundtrackGLHF.mp3"
 		}
 	},
 	called: function(stage) { 
@@ -28,33 +31,40 @@ canvas.Scene.new({
 	    var con = this;
 		function addEntities(x, y, self) {
 	        var entity = Class.New("Entity", [stage]);
-	        entity.rect(100); // square
+	        entity.rect(10); // square
 	        entity.position(x, y);
-            entity.el = self.createElement(100, 100);
+            entity.el = self.createElement(10, 10);
 	        entity.el.fillStyle = "red";
-	        entity.el.fillRect(0, 0, 100, 100);
+	        entity.el.fillRect(0, 0, 10, 10);
 	        entity.el.on("mouseover", function(e){
                 alert("lol");
                 //ahhhhhhhhh
             });
             stage.append(entity.el);
-            enemyCurvePool.push([-1, 1]);
+            var speed = Math.floor(Math.random() * 10) + 1;
+            enemyCurvePool.push([-1, 0]);
             enemyPool.push(entity);
 	        return entity;
 	     }
 	     
-	     enemyStreamline = setInterval(addEntities(40, 10, con), enemyStreamNum);
+	     for(var i = 0; i < 30; i++){
+	        var top = Math.floor(Math.random() * 200) + 1;
+	        var left = $(window).width();
+	        enemyStreamline = setInterval(addEntities(300, top, con), 100);
+	     }
+	     
 	     //clearInterval(enemyStreamline);
 	},
 	
 	render: function(stage){
-	   
+	    //alert(enemyCurvePool.length);
 	    for (var i = 0; i < enemyCurvePool.length; i++){
-	       var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], 3.14, 0.1);
+	       var curvePath = Math.floor(Math.random() * 3.14) + 0;
+	       var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, 0.1);
 	       enemyCurvePool[i][0] = update[0];
 	       enemyCurvePool[i][1] = update[1];
-	       alert(update[0]+","+ update[1]);
     	   enemyPool[i].move(update[0], update[1]); // x += 5;
+    	   //alert(update[0]+","+ update[1]);
     	}
     	
     	stage.refresh();
@@ -67,7 +77,12 @@ function curve(x, y, p_curve, rate){
     var g_track = new Array();
     
     g_track[0] = x - Math.sin(p_curve) * rate;
-    g_track[1] = y + Math.cos(p_curve) * rate;
+    if((Math.floor(Math.random() * 2) + 1) > 1){
+        g_track[1] = y + Math.cos(p_curve) * rate;
+    }else{
+        g_track[1] = y - Math.cos(p_curve) * rate;
+    }
+    
     
     return g_track;
     
@@ -78,7 +93,7 @@ function curve(x, y, p_curve, rate){
 function gameStart(){
     startTimer();
     enemyGenerate();
-    //playMusic();
+    playMusic();
     
 }
 
@@ -168,5 +183,5 @@ function updateDisplay() {
 }
 
 function playMusic(){
-    //ENTER JAMEEL'S MUSIC
+    canvas.Sound.playLoop("soundTrack");
 }
