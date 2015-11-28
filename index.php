@@ -4,7 +4,7 @@
     <script src="./assets/canvasengine/canvasengine-1.3.2.all.min.js"></script>
     <link rel=stylesheet type=text/css href="assets/css/theme.css">
     <link rel="icon" type="image/png" href="assets/img/favicon.ico">
-    <title>Learn from your Mistakes</title>
+    <title>M U L T I T A S K</title>
 </head>
 <body>
     <div id="gameContainer">
@@ -21,6 +21,7 @@
         $(document).ready(function(){
             $("button").click(function(){
                 $("#startbutton").fadeOut("slow");
+                $("#synopsis").fadeOut("slow");
                 $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
 
             });

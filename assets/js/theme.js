@@ -1,7 +1,8 @@
 var g_track = [-1,1];
 var enemeyStreamline;
 var enemeyStreamNum = 1; 
-var enemyPool = {}; 
+var enemyPool = new Array();
+var enemyCurvePool = new Array();
  
 var canvas = CE.defines("gameFrame").
     extend(Input).
@@ -9,7 +10,7 @@ var canvas = CE.defines("gameFrame").
 	ready(function() {
 		canvas.Scene.call("gameScene");
 });	
-    
+
 canvas.Scene.new({
     name: "gameScene",
     materials: {
@@ -38,10 +39,8 @@ canvas.Scene.new({
                 //ahhhhhhhhh
             });
             stage.append(entity.el);
-            enemyPool.push({
-                key: entity,
-                value: [-1,1]
-            });
+            enemyCurvePool.push([-1, 1]);
+            enemyPool.push(entity);
 	        return entity;
 	     }
 	     
@@ -50,9 +49,13 @@ canvas.Scene.new({
 	},
 	
 	render: function(stage){
-	    curve(3.14, 0.001);
-	    for (var e in enemyPool){
-    	   e.move(g_track[0], g_track[1]); // x += 5;
+	   
+	    for (var i = 0; i < enemyCurvePool.length; i++){
+	       var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], 3.14, 0.1);
+	       enemyCurvePool[i][0] = update[0];
+	       enemyCurvePool[i][1] = update[1];
+	       alert(update[0]+","+ update[1]);
+    	   enemyPool[i].move(update[0], update[1]); // x += 5;
     	}
     	stage.refresh();
 	}
@@ -60,10 +63,13 @@ canvas.Scene.new({
 
 
 
-function curve(p_curve, rate){
+function curve(x, y, p_curve, rate){
+    var g_track = new Array();
     
-    g_track[0] -= Math.sin(p_curve) * rate;
-    g_track[1] += Math.cos(p_curve) * rate;
+    g_track[0] = x - Math.sin(p_curve) * rate;
+    g_track[1] = y + Math.cos(p_curve) * rate;
+    
+    return g_track;
     
 }
 
@@ -71,9 +77,8 @@ function curve(p_curve, rate){
 
 function gameStart(){
     startTimer();
-    //BEGIN SHAPES AND QUESTIONS
-    //FIND WAY TO HAVE QUESTIONS AT THE START
-    //PLAYS DANK BEATS BY DRAMEEL
+    enemyGenerate();
+    //playMusic();
     
 }
 
@@ -106,7 +111,7 @@ function spawnAnEnemy(){
     } else if (randNum == 2){
         //Spawn spelling question
         //Make array of words to use, a random integer will be selected for charAt
-        var words = ["Estonia", "niggers", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
+        var words = ["Estonia", "science", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
         var chosen = (Math.floor(Math.random() * 10)) + 0;
         var limit = words[chosen].length;
         var character = Math.floor(Math.random() * limit) + 0;
@@ -121,9 +126,8 @@ function spawnAnEnemy(){
     
 
 
-
 function enemyGenerate(){
-	var randomNum = Math.floor(Math.random()*3);
+	var randomNum = Math.floor(Math.random()*3) + 1;
 	var spawnRate;
 	
 	if(randomNum == 1){
@@ -143,8 +147,7 @@ function enemyGenerate(){
 	
 }
 
-enemyGenerate();
-
+//enemyGenerate();
 
 //timer
 
@@ -162,4 +165,8 @@ function updateDisplay() {
     var value = parseInt($('#timer').find('.value').text(), 10);
     value++;
     $('#timer').find('.value').text(value);
+}
+
+function playMusic(){
+    //ENTER JAMEEL'S MUSIC
 }
