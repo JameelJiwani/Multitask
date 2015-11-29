@@ -1,11 +1,13 @@
 var enemyStreamline;
 var enemyStreamFreq = 100; 
+var questionFreq = 5000; 
 var spawnRate = 1;
 var isSpawning = false;
 var enemyPool = new Array();
 var enemyCurvePool = new Array();
 var mouseX = 0, mouseY = 0;
 var g_agent; 
+var enemyTally = {"NWB":0, "SBQ":0, "BWG":0, "SWP":0, "SCO":0, "Q":0};
 
 
 function gameStart(){
@@ -19,11 +21,10 @@ function gameStart(){
 function gameOver(){
     isSpawning = false;
     pauseTimer();
-    alert("Gameover");
-    Sound.stop("soundtrack");
-    
+    canvas.Sound.stop("soundTrack");
+    $("#startbutton").html("RETRY");
+    $("#startbutton").fadeIn("slow");
 }
-
 var canvas = CE.defines("gameFrame").
     extend(Input).
     extend(Hit).
@@ -49,23 +50,46 @@ canvas.Scene.new({
 	    var con = this;
 	    var thisCanvas = this.getCanvas();
 	    
-	    
-		function addEntities(x, y, self) {
+		function addEntities(x, y, self, type) {
+		    
 	        var entity = Class.New("Entity", [stage]);
 	        entity.rect(40); // square
+	        
+	        var entColor = "red";
+	        var speed = -1; //default
+	        //{"NWB":0, "SBQ":0, "BWG":0, "SWP":0, "SCO":0};
+	        switch(type){
+	            case "NWB": 
+	                entColor = "brown";
+	                break;
+	            case "SBQ":
+	                entColor = "blue";
+	                break;
+	            case "BWG":
+	                entColor = "green";
+	                speed = 1;
+	                x = 0;
+	                break;
+	            case "SWP":
+	                entColor = "purple";
+	                break;
+	            case "SCO":
+	                entColor = "orange";
+	                break;
+	            default: 
+	                entColor = "white";
+	                break;
+	        }
+
+	        enemyCurvePool.push([speed, 0]);
 	        entity.position(x, y);
-            entity.el = self.createElement(4, 40);
-	        entity.el.fillStyle = "brown";
+	        entity.el = self.createElement(40, 40);
+	        entity.el.fillStyle = entColor;
 	        entity.el.fillRect(0, 0, 40, 40);
-	        /*
-	        entity.el.on("hover", function(e){
-                alert("Gameover");
-                gameOver();
-                //ahhhhhhhhh
-            });*/
+	        entity.el.T = type;
+
             stage.append(entity.el);
             var speed = Math.floor(Math.random() * 10) + 1;
-            enemyCurvePool.push([-1, 0]);
             enemyPool.push(entity);
 	        return entity;
 	     }
@@ -82,32 +106,69 @@ canvas.Scene.new({
 	     stage.append(this.agent.el);
 	     
 	     for(var i = 0; i < spawnRate; i++){
-	        
 	        //multi thread
 	        var timeout; // current timeout id to clear
             function come(){
                 if(isSpawning){
 	                var top = Math.floor(Math.random() * $(window).height()) + 0;
     	            var left = $(window).width();
-    	            addEntities(left, top, con);
+    	            addEntities(left, top, con, "SBQ");
 	            }
             };
-            (function repeat() {
+            function ask(){
+                if(isSpawning){
+	                var top = Math.floor(Math.random() * $(window).height()) + 0;
+    	            var left = $(window).width();
+    	            addEntities(left, top, con, "SBQ");
+	            }
+            };
+            (function repeatE() {
                 come();
-                timeout = setTimeout(repeat, enemyStreamFreq);
+                timeout = setTimeout(repeatE, enemyStreamFreq);
+            })();
+            
+            (function repeatQ() {
+                ask();
+                timeout = setTimeout(repeatQ, questionFreq);
             })();
 	     }
-
 	},
 	
 	render: function(stage){
 	    updateMouse();
         this.agent.position(mouseX, mouseY);
+        
         var self = this;
 	    //alert(enemyCurvePool.length);
 	    for (var i = 0; i < enemyCurvePool.length; i++){
-	       var curvePath = Math.floor(Math.random() * 3.14) + 0;
-	       var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, 0.1);
+	        
+	        var curvePath = Math.floor(Math.random() * 3.14) + 0;
+	        var speed = 0.1;
+	        var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, false);
+	        alert(enemyPool[i].el.T);
+	        switch(enemyPool[i].el.T){
+	            case "NWB": 
+	                break;
+	            case "SBQ":
+	                curvePath = 3.1415/2;
+	                speed = 1;
+	                update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, false);
+	                break;
+	            case "BWG":
+	                speed = 0.1;
+	                update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, true);
+	                x = 0;
+	                break;
+	            case "SWP":
+	                break;
+	            case "SCO":
+	                break;
+	            default: 
+	                break;
+	       }
+	        
+	       
+	       
 	       enemyCurvePool[i][0] = update[0];
 	       enemyCurvePool[i][1] = update[1];
     	   enemyPool[i].move(update[0], update[1]); // x += 5;
@@ -115,6 +176,7 @@ canvas.Scene.new({
                if (state == "over") {
                     self.agent.el.fillStyle = "green";
                     self.agent.el.fillRect(0, 0, 0, 0);
+                    enemyTally[el.T]++; //learning
                     gameOver();
                 }
            });
@@ -132,10 +194,15 @@ function updateMouse(){
     }).mouseover(); 
 }
 
-function curve(x, y, p_curve, rate){
+function curve(x, y, p_curve, rate, reverse){
     var g_track = new Array();
     
-    g_track[0] = x - Math.sin(p_curve) * rate;
+    if(!reverse){
+        g_track[0] = x - Math.sin(p_curve) * rate;
+    }else{
+        g_track[0] = x + Math.sin(p_curve) * rate;
+    }
+    
     if((Math.floor(Math.random() * 2) + 1) > 1){
         g_track[1] = y + Math.cos(p_curve) * rate;
     }else{
@@ -183,13 +250,13 @@ function spawnAnEnemy(){
             if(plusMinus == 1){
                 answer = a + b;
                 if((a+b) < 9 && (a+b) > 0){
-                    isOneDig(true);
+                    isOneDig = true;
                     //CHECK ANSWER
                 }
             } else {
                 answer = a - b;
                 if((a-b) < 9 && (a-b) > 0){
-                    isOneDig(true);
+                    isOneDig = true;
                     //CHECK ANSWER
                 }
             }
@@ -224,12 +291,15 @@ function spawnAnEnemy(){
 var stopwatch;
 
 function startTimer(){
+    $('#timer').find('.value').text(0);
     stopwatch = setInterval(updateDisplay, 1);
 }
 
 function pauseTimer(){
     clearInterval(stopwatch);
 }
+
+
 
 function updateDisplay() {
     var value = parseInt($('#timer').find('.value').text(), 10);

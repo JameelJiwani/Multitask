@@ -76,6 +76,15 @@ body{
 }
 
 #aboutUs{
-    z-index: 2;
-    font-size: 10px;
+    font-size: 18px;
+}
+
+#topBar{
+    width: 45vw;
+    height: 10vh;
+    z-index: 6;
+}
+
+#gameName{
+    text-size: 18px;
 }

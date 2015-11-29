@@ -9,10 +9,13 @@
 <body>
     <div id="gameContainer">
         <canvas id="gameFrame" width="1440" height="1080"></canvas>
+        <div id="topBar">
+            <p id="gameName">M U L T I T A S K</p>
+            <a href="aboutUs.php" id="aboutUs">About Us</a>
+        </div>
         <div id="timer"><span class="value">0</span></div>
         <div class="buttonContainer"><button type="button" id="startbutton" onclick="gameStart()">BEGIN</button></div>
         <h3 id="synopsis">Best experienced with headphones.</h3>
-        <a href="aboutUs.php" id="aboutUs">About Us</a>
     </div>
     
     <script type="text/javascript" src="assets/js/theme.js"></script>
@@ -24,6 +27,8 @@
                 $("#synopsis").fadeOut("slow");
                 $("#timer").css("opacity", "1");
                 $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
+                $("#aboutUs").fadeOut("slow");
+                $("#gameName").fadeOut("slow");
             });
         });
     </script>
