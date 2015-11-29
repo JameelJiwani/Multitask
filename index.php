@@ -8,10 +8,11 @@
 </head>
 <body>
     <div id="gameContainer">
-        <canvas id="gameFrame"></canvas>
+        <canvas id="gameFrame" width="1440" height="1080"></canvas>
         <div id="timer"><span class="value">0</span></div>
         <div class="buttonContainer"><button type="button" id="startbutton" onclick="gameStart()">BEGIN</button></div>
         <h3 id="synopsis">Best experienced with headphones.</h3>
+        <a href="aboutUs.php" id="aboutUs">About Us</a>
     </div>
    
     <script type="text/javascript" src="assets/js/theme.js"></script>
@@ -23,9 +24,24 @@
                 $("#synopsis").fadeOut("slow");
                 $("#timer").css("opacity", "1");
                 $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
-
             });
         });
     </script>
 </body>
 </html>
+
+
+<!--$( "#dialog" ).dialog({-->
+<!--                    autoOpen: false,-->
+<!--                    show: {-->
+<!--                        effect: "blind",-->
+<!--                        duration: 1000-->
+<!--                    },-->
+<!--                    hide: {-->
+<!--                        effect: "explode",-->
+<!--                        duration: 1000-->
+<!--                    }-->
+<!--                });-->
+<!--                $( "#opener" ).click(function() {-->
+<!--                    $( "#dialog" ).dialog( "open" );-->
+<!--                });-->

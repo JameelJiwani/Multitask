@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Aleo;
+    src: url(../fonts/aleo/Aleo-Regular.otf);
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -21,6 +26,7 @@ body{
     border: solid 5px #6496c8;
     border-radius: 35px;
     text-align: center;
+    font-family: aleo;
     font-size: 400%;
     cursor: pointer;
 }
@@ -67,4 +73,9 @@ body{
     z-index: 1;
     top:0px;
     left:0px;
+}
+
+#aboutUs{
+    z-index: 2;
+    font-size:10px;
 }
