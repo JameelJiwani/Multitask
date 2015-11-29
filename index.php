@@ -10,8 +10,8 @@
     <div id="gameContainer">
         <canvas id="gameFrame"></canvas>
         <div id="timer"><span class="value">0</span></div>
-        <div class="buttonContainer"><button type="button" id="startbutton" onclick="gameStart()">START</button></div>
-        <h3 id="synopsis">The point of this game is to avoid the objects flying at you while answering simple questions. Can you multitask as well as you think you can?</h3>
+        <div class="buttonContainer"><button type="button" id="startbutton" onclick="gameStart()">BEGIN</button></div>
+        <h3 id="synopsis">Best experienced with headphones.</h3>
     </div>
    
     <script type="text/javascript" src="assets/js/theme.js"></script>

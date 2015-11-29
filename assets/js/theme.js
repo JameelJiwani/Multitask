@@ -1,8 +1,21 @@
 var enemyStreamline;
-var enemyStreamNum = 1; 
+var enemyStreamFreq = 1000; 
+var spawnRate = 1;
+var isSpawning = false;
 var enemyPool = new Array();
 var enemyCurvePool = new Array();
+
+
+function gameStart(){
+    startTimer();
+    enemyGenerate();
+    playMusic();
+    
+}
  
+
+ 
+
 var canvas = CE.defines("gameFrame").
     extend(Input).
     extend(Hit).
@@ -34,10 +47,11 @@ canvas.Scene.new({
 	        entity.rect(10); // square
 	        entity.position(x, y);
             entity.el = self.createElement(10, 10);
-	        entity.el.fillStyle = "red";
+	        entity.el.fillStyle = "brown";
 	        entity.el.fillRect(0, 0, 10, 10);
 	        entity.el.on("mouseover", function(e){
                 alert("lol");
+                gameOver();
                 //ahhhhhhhhh
             });
             stage.append(entity.el);
@@ -47,13 +61,24 @@ canvas.Scene.new({
 	        return entity;
 	     }
 	     
-	     for(var i = 0; i < 30; i++){
-	        var top = Math.floor(Math.random() * 200) + 1;
-	        var left = $(window).width();
-	        enemyStreamline = setInterval(addEntities(300, top, con), 100);
+	     for(var i = 0; i < spawnRate; i++){
+	        
+	        //multi thread
+	        var timeout; // current timeout id to clear
+            function come(){
+                if(isSpawning){
+	                var top = Math.floor(Math.random() * 200) + 1;
+    	            var left = $(window).width();
+    	            addEntities(300, top, con);
+	            }
+            };
+            var enemyStreamFreq; // dynamic interval
+            (function repeat() {
+                come();
+                timeout = setTimeout(repeat, enemyStreamFreq);
+            })();
 	     }
 	     
-	     //clearInterval(enemyStreamline);
 	},
 	
 	render: function(stage){
@@ -88,62 +113,8 @@ function curve(x, y, p_curve, rate){
     
 }
 
-
-
-function gameStart(){
-    startTimer();
-    enemyGenerate();
-    playMusic();
-    
-}
-
-function spawnAnEnemy(){
-    var difficulty = 3;
-    var randNum = Math.floor(Math.random() * difficulty) + 1;
-    
-    if (randNum == 1) {
-        //Spawn number question
-        var a, b, plusMinus, answer;
-        var isOneDig = false;
-        while (isOneDig == false){
-        a = Math.floor(Math.random() * 20) + 1;
-        b = Math.floor(Math.random() * 20) + 1;
-        plusMinus = Math.floor(Math.random() * 2) + 1;
-        if(plusMinus == 1){
-            answer = a + b;
-            if((a+b) < 9 && (a+b) > 0){
-                isOneDig(true);
-                //CHECK ANSWER
-            }
-        } else {
-            answer = a - b;
-            if((a-b) < 9 && (a-b) > 0){
-                isOneDig(true);
-                //CHECK ANSWER
-            }
-        }
-        } 
-    } else if (randNum == 2){
-        //Spawn spelling question
-        //Make array of words to use, a random integer will be selected for charAt
-        var words = ["Estonia", "science", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
-        var chosen = (Math.floor(Math.random() * 10)) + 0;
-        var limit = words[chosen].length;
-        var character = Math.floor(Math.random() * limit) + 0;
-        var answer = chosen[character];
-        //STATE QUESTION
-        //<h2> ("What is letter number " + character + " in the word " + chosen + "?") </h2> //DOES THIS WORK????
-        //CHECK ANSWER, HOW DO YOU COMPARE USER INPUT?
-    } else { 
-        
-    }
-} 
-    
-
-
 function enemyGenerate(){
 	var randomNum = Math.floor(Math.random()*3) + 1;
-	var spawnRate;
 	
 	if(randomNum == 1){
 		spawnRate = 1;
@@ -155,12 +126,65 @@ function enemyGenerate(){
 		spawnRate = 5;
 	}
 	
+	isSpawning = true;
 	//Calls spawnAnEnemy, where actual enemies are created
  	for(var i = 0; i < spawnRate; i++){
  	    spawnAnEnemy();
  	}
-	
 }
+
+
+function spawnAnEnemy(){
+    var difficulty = 4;
+    var randNum = Math.floor(Math.random() * difficulty) + 1;
+    
+    if (randNum == 1) {
+        //Spawn number question
+        var a, b, plusMinus, answer;
+        var isOneDig = false;
+        while (isOneDig == false){
+            a = Math.floor(Math.random() * 20) + 1;
+            b = Math.floor(Math.random() * 20) + 1;
+            plusMinus = Math.floor(Math.random() * 2) + 1;
+            if(plusMinus == 1){
+                answer = a + b;
+                if((a+b) < 9 && (a+b) > 0){
+                    isOneDig(true);
+                    //CHECK ANSWER
+                }
+            } else {
+                answer = a - b;
+                if((a-b) < 9 && (a-b) > 0){
+                    isOneDig(true);
+                    //CHECK ANSWER
+                }
+            }
+        }
+        
+    } else if (randNum == 2){
+        //Spawn spelling question
+        //Make array of words to use, a random integer will be selected for charAt
+        var words = ["Estonia", "science", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
+        var chosen = (Math.floor(Math.random() * 10)) + 0;
+        var limit = words[chosen].length;
+        var character = Math.floor(Math.random() * limit) + 0;
+        var answer = chosen[character];
+        //STATE QUESTION
+        //<h2> ("What is letter number " + character + " in the word " + chosen + "?") </h2> //DOES THIS WORK????
+        //CHECK ANSWER, HOW DO YOU COMPARE USER INPUT?
+    } else {
+        if (enemyStreamFreq > 10) {
+            enemyStreamFreq /= 10;
+        }
+    }
+} 
+    
+function gameOver(){
+    isSpawning = false;
+    pauseTimer();
+}
+
+
 
 //enemyGenerate();
 
@@ -173,7 +197,7 @@ function startTimer(){
 }
 
 function pauseTimer(){
-    stopwatch = clearInterval(updateDisplay);
+    clearInterval(stopwatch);
 }
 
 function updateDisplay() {
