@@ -20,15 +20,60 @@ body{
   align-items: center;
 }
 
+.highscore {
+    z-index: 300;
+    width: 50vw;
+    display:none;
+}
+
+.highscore h4 {
+    text-align: center;
+    font-family: aleo;
+}
+
+.highscore input {
+    border: 0;
+    border: solid 2px #6496c8;
+    width: 50vw;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    border-color: #6496c8;
+    outline: none;
+    height: 5vh;
+}
+
+.highscore input[type="text"] {
+    font-size: 100%;
+    font-family: aleo;
+    margin: 1vw;
+}
+
+.highscore button {
+    margin: 1vh;
+    color: #6496c8;
+    background: rgba(0,0,0,0);
+    border: solid 5px #6496c8;
+    border-radius: 50px;
+    text-align: center;
+    font-family: aleo;
+    font-size: 100%;
+    cursor: pointer;
+    transition: background-color .5s ease;
+    -webkit-transition: background-color .5s ease;
+}
+
 #startbutton {
     color: #6496c8;
     background: rgba(0,0,0,0);
     border: solid 5px #6496c8;
-    border-radius: 35px;
+    border-radius: 50px;
     text-align: center;
+    padding: 1vh;
     font-family: aleo;
     font-size: 400%;
     cursor: pointer;
+    transition: background-color .5s ease;
+    -webkit-transition: background-color .5s ease;
 }
 
 #timer {
@@ -75,16 +120,28 @@ body{
     left:0px;
 }
 
-#aboutUs{
-    font-size: 18px;
-}
-
-#topBar{
-    width: 45vw;
-    height: 10vh;
-    z-index: 6;
-}
-
 #gameName{
-    text-size: 18px;
+    position: absolute;
+    font-size: 32px;
+    left: 30%;
+    right: 30%;
+    top: 5%;
+}
+
+#synopsis{
+    margin-bottom: -6%;
+    margin-top: 11%;
+}
+
+#aboutUs{
+    font-size: 10px;
+    z-index: 5;
+    margin-bottom: 2%;
+}
+
+#Q{
+    font-size: 40px;
+    color:black;
+    z-index: 5;
+    
 }

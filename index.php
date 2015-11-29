@@ -1,3 +1,23 @@
+<?php
+// $servername = "localhost";
+// $username = "d41d0e3bc160";
+// $password = "b5845cf8776fd5c0";
+// $dbname = "leaderboards";
+
+// $score = $_POST["score"];
+// $userName = $_GET["highscoreName"];
+
+// $conn = mysqli_connect($servername, $username, $password, $dbname);
+// if (!$conn) {
+//     die("Connection failed: " . mysqli_connect_error());
+// }
+
+// $sql = "INSERT INTO user (score, userName)
+// VALUES ($score, '$userName)";
+
+// mysqli_close($conn);
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,13 +29,22 @@
 <body>
     <div id="gameContainer">
         <canvas id="gameFrame" width="1440" height="1080"></canvas>
-        <div id="topBar">
             <p id="gameName">M U L T I T A S K</p>
-            <a href="aboutUs.php" id="aboutUs">About Us</a>
+            <div id="timer"><span class="value">0</span></div>
+            <p id="Q"></p>
+        <div class="buttonContainer">
+            <button type="button" id="startbutton" onclick="gameStart()">BEGIN</button>
         </div>
-        <div id="timer"><span class="value">0</span></div>
-        <div class="buttonContainer"><button type="button" id="startbutton" onclick="gameStart()">BEGIN</button></div>
-        <h3 id="synopsis">Best experienced with headphones.</h3>
+        <div class="highscore">
+            <h4>Submit your highscore!</h4>
+            <form name="highScoreSubmit" method="GET" action="<?php $_PHP_SELF ?>">
+                <input type="text" name="highscoreName">
+                <input id="score" type="hidden" name="score">
+                <button type="submit" id="submit" >SUBMIT</button>
+            </form>
+        </div>
+        <h3 id="synopsis">For an enhanced experience, wear headphones.</h3>
+        <a href="aboutUs.php" id="aboutUs">A B O U T&nbsp;&nbsp;&nbsp;T H E&nbsp;&nbsp;&nbsp;D E V E L O P E R S</a>
     </div>
     
     <script type="text/javascript" src="assets/js/theme.js"></script>
@@ -25,28 +54,12 @@
             $("button").click(function(){
                 $("#startbutton").fadeOut("slow");
                 $("#synopsis").fadeOut("slow");
+                $("#gameName").fadeOut("slow");
+                $("#aboutUs").fadeOut("slow");
                 $("#timer").css("opacity", "1");
                 $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
-                $("#aboutUs").fadeOut("slow");
-                $("#gameName").fadeOut("slow");
             });
         });
     </script>
 </body>
 </html>
-
-
-<!--$( "#dialog" ).dialog({-->
-<!--                    autoOpen: false,-->
-<!--                    show: {-->
-<!--                        effect: "blind",-->
-<!--                        duration: 1000-->
-<!--                    },-->
-<!--                    hide: {-->
-<!--                        effect: "explode",-->
-<!--                        duration: 1000-->
-<!--                    }-->
-<!--                });-->
-<!--                $( "#opener" ).click(function() {-->
-<!--                    $( "#dialog" ).dialog( "open" );-->
-<!--                });-->

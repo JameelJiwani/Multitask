@@ -1,5 +1,5 @@
 var enemyStreamline;
-var enemyStreamFreq = 100; 
+var enemyStreamFreq = 500; 
 var questionFreq = 5000; 
 var spawnRate = 1;
 var isSpawning = false;
@@ -7,8 +7,20 @@ var enemyPool = new Array();
 var enemyCurvePool = new Array();
 var mouseX = 0, mouseY = 0;
 var g_agent; 
-var enemyTally = {"NWB":0, "SBQ":0, "BWG":0, "SWP":0, "SCO":0, "Q":0};
-
+var g_index;
+var enemyTally = {"NWB":0, "SBQ":0, "BWG":0}; //"SWP":0, "SCO":0, 
+var charOptimal = false; //the char that is right
+//var words = ["Estonia", "science", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
+var qList = [   "What is the second letter of Estonia?", 
+                "What is the third letter of science?",
+                "What is the first letter of turtle?", 
+                "What is the second last letter of street?", 
+                "What is the last letter of facilitated?", 
+                "What is the fifth letter of restaurant"];
+            
+var cList = ['s', 'i', "t",'e', 'd', 'a'];
+var timeout; // current timeout id to clear
+var timeoutq; 
 
 function gameStart(){
     startTimer();
@@ -21,7 +33,11 @@ function gameStart(){
 function gameOver(){
     isSpawning = false;
     pauseTimer();
+    var value = parseInt($('#timer').find('.value').text(), 10);
+    $('#score').text(value);
+    $("#Q").html("");
     canvas.Sound.stop("soundTrack");
+    $(".highscore").fadeIn("slow");
     $("#startbutton").html("RETRY");
     $("#startbutton").fadeIn("slow");
 }
@@ -30,7 +46,7 @@ var canvas = CE.defines("gameFrame").
     extend(Hit).
 	ready(function() {
 		canvas.Scene.call("gameScene");
-});	
+    });	
 
 canvas.Scene.new({
     name: "gameScene",
@@ -94,6 +110,9 @@ canvas.Scene.new({
 	        return entity;
 	     }
 	     
+	     
+
+         
 	     //create agent
 	     updateMouse();
 	     this.agent = Class.New("Entity", [stage]);
@@ -105,21 +124,56 @@ canvas.Scene.new({
 	     g_agent = this.agent;
 	     stage.append(this.agent.el);
 	     
-	     for(var i = 0; i < spawnRate; i++){
 	        //multi thread
-	        var timeout; // current timeout id to clear
+	        
+	        $(document).keypress(function(e) {
+                            if(String.fromCharCode(e.which)!= cList[g_index]){
+                                alert(String.fromCharCode(e.which));
+                                charOptimal = false;
+                                gameOver();
+                            }else{ //correct
+                                charOptimal = false;
+                                $("#Q").html("");
+                            }
+                        });
+
             function come(){
                 if(isSpawning){
 	                var top = Math.floor(Math.random() * $(window).height()) + 0;
     	            var left = $(window).width();
-    	            addEntities(left, top, con, "SBQ");
+    	            var top2 = [0,0];
+    	            var top2Var = ["NWB", "SBQ"];
+    	            var total = 0;
+    	            for (var i in enemyTally){
+    	                total += i;
+    	                if (enemyTally[i] >= top2[0]){
+    	                    top2Var[0] = i;
+    	                    top2[0] = enemyTally[i];
+    	                }else if (enemyTally[i] >= top2[1]){
+    	                    top2Var[1] = i;
+    	                    top2[1] = enemyTally[i];
+    	                }
+    	            }
+    	            alert(total);
+    	            var rand = Math.floor(Math.random() * total);
+    	            addEntities(left, top, con, top2Var[0]);
+    	            addEntities(left, top, con, top2Var[1]);
 	            }
             };
+            
             function ask(){
+                
                 if(isSpawning){
-	                var top = Math.floor(Math.random() * $(window).height()) + 0;
-    	            var left = $(window).width();
-    	            addEntities(left, top, con, "SBQ");
+                    if (charOptimal){ //taking too long
+                        charOptimal = false;
+                        gameOver();
+                    }else{
+                        charOptimal = true;
+                        g_index = Math.floor(Math.random() * (qList.length-1));
+    	                $("#Q").html(qList[g_index]);
+                    }
+	            }else{
+	                return;
 	            }
             };
             (function repeatE() {
@@ -129,9 +183,11 @@ canvas.Scene.new({
             
             (function repeatQ() {
                 ask();
-                timeout = setTimeout(repeatQ, questionFreq);
+                timeoutq = setTimeout(repeatQ, questionFreq);
             })();
-	     }
+	     
+	     
+	     
 	},
 	
 	render: function(stage){
@@ -145,7 +201,7 @@ canvas.Scene.new({
 	        var curvePath = Math.floor(Math.random() * 3.14) + 0;
 	        var speed = 0.1;
 	        var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, false);
-	        alert(enemyPool[i].el.T);
+	        //alert(enemyPool[i].el.T);
 	        switch(enemyPool[i].el.T){
 	            case "NWB": 
 	                break;
@@ -213,6 +269,8 @@ function curve(x, y, p_curve, rate, reverse){
     return g_track;
     
 }
+
+
 
 function enemyGenerate(){
 	var randomNum = Math.floor(Math.random()*3) + 1;
@@ -309,4 +367,20 @@ function updateDisplay() {
 
 function playMusic(){
     canvas.Sound.playLoop("soundTrack");
+}
+
+
+
+var countDownClock;
+var second = 0; 
+var TIMEFORQ = 5;
+function startCountDownClock(){
+    second = 0;
+    countDownClock = setInterval(updateCountDown, 1000);
+}
+function updateCountDown(){
+    second++;
+}
+function stopCountDownClock(){
+    clearInterval(countDownClock);
 }
