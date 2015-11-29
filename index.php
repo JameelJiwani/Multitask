@@ -14,7 +14,7 @@
         <h3 id="synopsis">Best experienced with headphones.</h3>
         <a href="aboutUs.php" id="aboutUs">About Us</a>
     </div>
-   
+    
     <script type="text/javascript" src="assets/js/theme.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>

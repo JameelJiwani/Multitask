@@ -1,20 +1,28 @@
 var enemyStreamline;
-var enemyStreamFreq = 1000; 
+var enemyStreamFreq = 100; 
 var spawnRate = 1;
 var isSpawning = false;
 var enemyPool = new Array();
 var enemyCurvePool = new Array();
 var mouseX = 0, mouseY = 0;
+var g_agent; 
 
 
 function gameStart(){
     startTimer();
     enemyGenerate();
     playMusic();
-    
+	g_agent.el.fillStyle = "yellow";
+	g_agent.el.fillRect(0, 0, 30, 30);
 }
 
-
+function gameOver(){
+    isSpawning = false;
+    pauseTimer();
+    alert("Gameover");
+    Sound.stop("soundtrack");
+    
+}
 
 var canvas = CE.defines("gameFrame").
     extend(Input).
@@ -69,7 +77,8 @@ canvas.Scene.new({
          this.agent.position(mouseX, mouseY);
          this.agent.el = this.createElement(40, 40);
 	     this.agent.el.fillStyle = "yellow";
-	     this.agent.el.fillRect(0, 0, 40, 40);
+	     this.agent.el.fillRect(0, 0, 0, 0);
+	     g_agent = this.agent;
 	     stage.append(this.agent.el);
 	     
 	     for(var i = 0; i < spawnRate; i++){
@@ -88,6 +97,7 @@ canvas.Scene.new({
                 timeout = setTimeout(repeat, enemyStreamFreq);
             })();
 	     }
+
 	},
 	
 	render: function(stage){
@@ -203,11 +213,7 @@ function spawnAnEnemy(){
     }
 } 
 
-function gameOver(){
-    isSpawning = false;
-    pauseTimer();
-    alert("Gameover");
-}
+
 
 
 
