@@ -1,39 +1,33 @@
 var enemyStreamline;
-var enemyStreamFreq = 500;
-var questionFreq = 5000;
+var enemyStreamFreq = 500; 
+var questionFreq = 5000; 
 var spawnRate = 1;
 var isSpawning = false;
 var enemyPool = new Array();
 var enemyCurvePool = new Array();
 var mouseX = 0, mouseY = 0;
-var g_agent;
+var g_agent; 
 var g_index;
-var enemyTally = {"NWB":1, "SBQ":1, "BWG":1}; //"SWP":0, "SCO":0,
+var enemyTally = {"NWB":1, "SBQ":1, "BWG":1}; //"SWP":0, "SCO":0, 
 var charOptimal = false; //the char that is right
 //var words = ["Estonia", "science", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
-var qList = [   "What is the second letter of Estonia?",
+var qList = [   "What is the second letter of Estonia?", 
                 "What is the third letter of science?",
-                "What is the first letter of turtle?",
-                "What is the second last letter of street?",
-                "What is the last letter of facilitated?",
+                "What is the first letter of turtle?", 
+                "What is the second last letter of street?", 
+                "What is the last letter of facilitated?", 
                 "What is the fifth letter of restaurant",
-                "What is the second letter of Chevrolet",
-                "What is the last letter of nostalgia?",
-                "The capital of Poland starts with ___",
-                "The circumference of a circle can be defined as ___ pi * r",
+                "The capital of Poland starts with ___", 
+                "The circonference of a circle can be defined as ___ pi * r",
                 "2 b or not 2 ___",
                 "2 + 4 = __",
                 "Luv our site? (y/n)",
-                "John __ Kennedy",
-                "Elizabeth is the Queen of the U.__.",
-                "abc.xy__",
-                "8 + 1 = __",
-                "2 cubed = __"
+                "John __ Kennedy"
                 ];
-
-var cList = ['s', 'i', "t", 'e', 'd', 'a', 'h','a', 'w', '2', 'b', '6', 'y', 'f', 'k', 'z', '9', '8'];
+            
+var cList = ['s', 'i', "t",'e', 'd', 'a', 'w', '2', 'b', '6', 'y', 'f'];
 var timeout; // current timeout id to clear
-var timeoutq;
+var timeoutq; 
 
 function gameStart(){
     startTimer();
@@ -41,7 +35,6 @@ function gameStart(){
     playMusic();
 	g_agent.el.fillStyle = "yellow";
 	g_agent.el.fillRect(0, 0, 30, 30);
-	$('body').css('cursor', 'none');
 }
 
 function gameOver(){
@@ -53,15 +46,13 @@ function gameOver(){
     $(".highscore").fadeIn("slow");
     $("#startbutton").html("RETRY");
     $("#startbutton").fadeIn("slow");
-    //$('body').css('cursor', 'none');
-    $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
 }
 var canvas = CE.defines("gameFrame").
     extend(Input).
     extend(Hit).
 	ready(function() {
 		canvas.Scene.call("gameScene");
-    });
+    });	
 
 canvas.Scene.new({
     name: "gameScene",
@@ -71,26 +62,26 @@ canvas.Scene.new({
 		    soundTrack: "../assets/audio/SoundtrackGLHF.mp3"
 		}
 	},
-	called: function(stage) {
+	called: function(stage) { 
 		$("#gameFrame").height($(window).height()).width($(window).width());
 	},/*
 	preload: function(stage, pourcent, material){
-
+		
 	},*/
 	ready: function(stage) {
 	    var con = this;
 	    var thisCanvas = this.getCanvas();
-
+	    
 		function addEntities(x, y, self, type) {
-
+		    
 	        var entity = Class.New("Entity", [stage]);
 	        entity.rect(40); // square
-
+	        
 	        var entColor = "red";
 	        var speed = -1; //default
 	        //{"NWB":0, "SBQ":0, "BWG":0, "SWP":0, "SCO":0};
 	        switch(type){
-	            case "NWB":
+	            case "NWB": 
 	                entColor = "brown";
 	                break;
 	            case "SBQ":
@@ -107,7 +98,7 @@ canvas.Scene.new({
 	            case "SCO":
 	                entColor = "orange";
 	                break;
-	            default:
+	            default: 
 	                entColor = "white";
 	                break;
 	        }
@@ -124,10 +115,10 @@ canvas.Scene.new({
             enemyPool.push(entity);
 	        return entity;
 	     }
+	     
+	     
 
-
-
-
+         
 	     //create agent
 	     updateMouse();
 	     this.agent = Class.New("Entity", [stage]);
@@ -138,9 +129,9 @@ canvas.Scene.new({
 	     this.agent.el.fillRect(0, 0, 0, 0);
 	     g_agent = this.agent;
 	     stage.append(this.agent.el);
-
+	     
 	        //multi thread
-
+	        
 	        $(document).keypress(function(e) {
                             if(String.fromCharCode(e.which)!= cList[g_index]){
                                 //alert(String.fromCharCode(e.which));
@@ -156,22 +147,22 @@ canvas.Scene.new({
                 if(isSpawning){
 	                var top = Math.floor(Math.random() * $(window).height()) + 0;
     	            var left = $(window).width();
-    	            var distrubution = new Array();
+    	            var distrubution = new Array(); 
     	            var total = 0;
-
+    	            
     	            for (var i in enemyTally){
     	                total += enemyTally[i];
     	                distrubution.push(i);
     	            }
     	            var rand = Math.floor(Math.random() * total);
-
+    	            
     	            addEntities(left, top, con, distrubution[rand]);
     	            addEntities(left, top, con, distrubution[rand]);
 	            }
             };
-
+            
             function ask(){
-
+                
                 if(isSpawning){
                     if (charOptimal){ //taking too long
                         charOptimal = false;
@@ -189,30 +180,30 @@ canvas.Scene.new({
                 come();
                 timeout = setTimeout(repeatE, enemyStreamFreq);
             })();
-
+            
             (function repeatQ() {
                 ask();
                 timeoutq = setTimeout(repeatQ, questionFreq);
             })();
-
-
-
+	     
+	     
+	     
 	},
-
+	
 	render: function(stage){
 	    updateMouse();
         this.agent.position(mouseX, mouseY);
-
+        
         var self = this;
 	    //alert(enemyCurvePool.length);
 	    for (var i = 0; i < enemyCurvePool.length; i++){
-
+	        
 	        var curvePath = Math.floor(Math.random() * 3.14) + 0;
 	        var speed = 0.1;
 	        var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, false);
 	        //alert(enemyPool[i].el.T);
 	        switch(enemyPool[i].el.T){
-	            case "NWB":
+	            case "NWB": 
 	                break;
 	            case "SBQ":
 	                curvePath = 3.1415/2;
@@ -228,12 +219,12 @@ canvas.Scene.new({
 	                break;
 	            case "SCO":
 	                break;
-	            default:
+	            default: 
 	                break;
 	       }
-
-
-
+	        
+	       
+	       
 	       enemyCurvePool[i][0] = update[0];
 	       enemyCurvePool[i][1] = update[1];
     	   enemyPool[i].move(update[0], update[1]); // x += 5;
@@ -247,7 +238,7 @@ canvas.Scene.new({
            });
     	   //alert(update[0]+","+ update[1]);
     	}
-
+    	
     	stage.refresh();
 	}
 });
@@ -256,44 +247,44 @@ function updateMouse(){
     $(document).mousemove(function(e) {
         mouseX = e.pageX;
         mouseY = e.pageY;
-    }).mouseover();
+    }).mouseover(); 
 }
 
 function curve(x, y, p_curve, rate, reverse){
     var g_track = new Array();
-
+    
     if(!reverse){
         g_track[0] = x - Math.sin(p_curve) * rate;
     }else{
         g_track[0] = x + Math.sin(p_curve) * rate;
     }
-
+    
     if((Math.floor(Math.random() * 2) + 1) > 1){
         g_track[1] = y + Math.cos(p_curve) * rate;
     }else{
         g_track[1] = y - Math.cos(p_curve) * rate;
     }
-
-
+    
+    
     return g_track;
-
+    
 }
 
 
 
 function enemyGenerate(){
 	var randomNum = Math.floor(Math.random()*3) + 1;
-
+	
 	if(randomNum == 1){
 		spawnRate = 1;
-
+		
 	} else if(randomNum == 2){
 		spawnRate = 3;
-
+		
 	} else {
 		spawnRate = 5;
 	}
-
+	
 	isSpawning = true;
 	//Calls spawnAnEnemy, where actual enemies are created
  	for(var i = 0; i < spawnRate; i++){
@@ -305,7 +296,7 @@ function enemyGenerate(){
 function spawnAnEnemy(){
     var difficulty = 4;
     var randNum = Math.floor(Math.random() * difficulty) + 1;
-
+    
     if (randNum == 1) {
         //Spawn number question
         var a, b, plusMinus, answer;
@@ -328,7 +319,7 @@ function spawnAnEnemy(){
                 }
             }
         }
-
+        
     } else if (randNum == 2){
         //Spawn spelling question
         //Make array of words to use, a random integer will be selected for charAt
@@ -345,7 +336,7 @@ function spawnAnEnemy(){
             enemyStreamFreq -= 10;
         }
     }
-}
+} 
 
 
 
@@ -381,7 +372,7 @@ function playMusic(){
 
 
 var countDownClock;
-var second = 0;
+var second = 0; 
 var TIMEFORQ = 5;
 function startCountDownClock(){
     second = 0;

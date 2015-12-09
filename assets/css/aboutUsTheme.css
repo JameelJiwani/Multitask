@@ -1,0 +1,36 @@
+@font-face {
+    font-family: Aleo;
+    src: url(../assets/fonts/aleo/Aleo-Regular.otf);
+}
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background-image: url(/assets/img/pink_rice.png);
+}
+
+h1 {
+    background-color: red;
+    text-align: center;
+    height: 0%;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 3vw;
+}
+
+.child {
+    height: 70vh;
+    width: 30vw;
+}
+
+.child img {
+    width: 100%;
+}

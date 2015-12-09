@@ -54,10 +54,11 @@
             $("button").click(function(){
                 $("#startbutton").fadeOut("slow");
                 $("#synopsis").fadeOut("slow");
+                $(".highscore").fadeOut("slow");
                 $("#gameName").fadeOut("slow");
                 $("#aboutUs").fadeOut("slow");
                 $("#timer").css("opacity", "1");
-                $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
+               // $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
             });
         });
     </script>
