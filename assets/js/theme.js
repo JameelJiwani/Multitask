@@ -1,6 +1,6 @@
 var enemyStreamline;
 var enemyStreamFreq = 300;
-var questionFreq = 3000;
+var questionFreq = 10000;
 var isSpawning = false;
 var enemyPool = new Array();
 var enemyCurvePool = new Array();
@@ -208,7 +208,8 @@ canvas.Scene.new({
             }
             timeout = setTimeout(repeatE, enemyStreamFreq);
         })();
-
+        
+        
         (function repeatQ() {
            if(isSpawning){
                 ask();

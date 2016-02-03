@@ -25,8 +25,10 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="./assets/canvasengine/canvasengine-1.3.2.all.min.js"></script>
-    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
-    <script type="text/javascript" src="assets/js/theme.js"></script>
+    <script src="//fast.eager.io/DNZjoLbvuK.js"></script>
+    <script type="text/javascript" src="./assets/js/utilities.js"></script>
+    <script type="text/javascript" src="./assets/js/theme.js"></script>
+    <link rel="icon" type="image/png" href="./assets/img/favicon.ico">
     <link rel=stylesheet type=text/css href="./assets/css/theme.css">
     <title>M U L T I T A S K</title>
 
@@ -57,6 +59,7 @@
     
     
     <script>
+        generateCapitalQuestions();
         $(document).ready(function(){
             $("button").click(function(){
                 $("#startbutton").fadeOut("slow");
