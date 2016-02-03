@@ -18,17 +18,24 @@
 // mysqli_close($conn);
 
 ?>
+
 <!DOCTYPE html>
+
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="./assets/canvasengine/canvasengine-1.3.2.all.min.js"></script>
-    <link rel=stylesheet type=text/css href="assets/css/theme.css">
     <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <script type="text/javascript" src="assets/js/theme.js"></script>
+    <link rel=stylesheet type=text/css href="./assets/css/theme.css">
     <title>M U L T I T A S K</title>
+
 </head>
 <body>
     <div id="gameContainer">
-        <canvas id="gameFrame" width="1440" height="1080"></canvas>
+        <script type="text/javascript">
+            $( "#gameContainer" ).prepend( "<canvas id='gameFrame' width="+ window.innerWidth +" height="+ window.innerHeight + "></canvas>" );
+        </script>
             <p id="gameName">M U L T I T A S K</p>
             <div id="timer"><span class="value">0</span></div>
             <p id="Q"></p>
@@ -47,8 +54,8 @@
         <a href="aboutUs.php" id="aboutUs">A B O U T&nbsp;&nbsp;&nbsp;T H E&nbsp;&nbsp;&nbsp;D E V E L O P E R S</a>
     </div>
     
-    <script type="text/javascript" src="assets/js/theme.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    
     <script>
         $(document).ready(function(){
             $("button").click(function(){

@@ -1,14 +1,15 @@
 var enemyStreamline;
-var enemyStreamFreq = 300;
-var questionFreq = 3000;
+var enemyStreamFreq = 500;
+var questionFreq = 5000;
+var spawnRate = 1;
 var isSpawning = false;
 var enemyPool = new Array();
 var enemyCurvePool = new Array();
 var mouseX = 0, mouseY = 0;
 var g_agent;
 var g_index;
-var enemyTally = {"NWB":1, "SBQ":1, "BWG":1, "SWP":1, "SCO": 1}; //"SWP":0, "SCO":0,
-var isWaitingAnswer = false; //the char that is right
+var enemyTally = {"NWB":1, "SBQ":1, "BWG":1}; //"SWP":0, "SCO":0,
+var charOptimal = false; //the char that is right
 //var words = ["Estonia", "science", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
 var qList = [   "What is the second letter of Estonia?",
                 "What is the third letter of science?",
@@ -36,48 +37,98 @@ var timeoutq;
 
 
 //game pieces
-function paintAgent(){
+function setUpAgent(){
     g_agent.el.fillStyle = "yellow";
-    //g_agent.el.drawImage("ufo");
-    //g_agent.el.setOriginPosition("middle");
 	g_agent.el.fillRect(0, 0, 30, 30);
 }
 
-function toggleEnemyGeneration(status){
-    isSpawning = status;
+function enemyGenerate(){
+	var randomNum = Math.floor(Math.random()*3) + 1;
+
+	if(randomNum == 1){
+		spawnRate = 1;
+
+	} else if(randomNum == 2){
+		spawnRate = 3;
+
+	} else {
+		spawnRate = 5;
+	}
+
+	isSpawning = true;
+	//Calls spawnAnEnemy, where actual enemies are created
+ 	for(var i = 0; i < spawnRate; i++){
+ 	    spawnAnEnemy();
+ 	}
 }
 
-//game start and over
+function spawnAnEnemy(){
+    var difficulty = 4;
+    var randNum = Math.floor(Math.random() * difficulty) + 1;
+
+    if (randNum == 1) {
+        //Spawn number question
+        var a, b, plusMinus, answer;
+        var isOneDig = false;
+        while (isOneDig == false){
+            a = Math.floor(Math.random() * 20) + 1;
+            b = Math.floor(Math.random() * 20) + 1;
+            plusMinus = Math.floor(Math.random() * 2) + 1;
+            if(plusMinus == 1){
+                answer = a + b;
+                if((a+b) < 9 && (a+b) > 0){
+                    isOneDig = true;
+                    //CHECK ANSWER
+                }
+            } else {
+                answer = a - b;
+                if((a-b) < 9 && (a-b) > 0){
+                    isOneDig = true;
+                    //CHECK ANSWER
+                }
+            }
+        }
+
+    } else if (randNum == 2){
+        //Spawn spelling question
+        //Make array of words to use, a random integer will be selected for charAt
+        var words = ["Estonia", "science", "turtle", "street", "facilitated", "computer", "window", "sleep", "wonder", "restaurant", "accommodate"];
+        var chosen = (Math.floor(Math.random() * 10)) + 0;
+        var limit = words[chosen].length;
+        var character = Math.floor(Math.random() * limit) + 0;
+        var answer = chosen[character];
+        //STATE QUESTION
+        //<h2> ("What is letter number " + character + " in the word " + chosen + "?") </h2> //DOES THIS WORK????
+        //CHECK ANSWER, HOW DO YOU COMPARE USER INPUT?
+    } else {
+        if (enemyStreamFreq > 200) {
+            enemyStreamFreq -= 10;
+        }
+    }
+}
+
+
+
 function gameStart(){
     startTimer();
-    toggleEnemyGeneration(true);
+    enemyGenerate();
     playMusic();
-    paintAgent();   
-    isWaitingAnswer = false;
+    setUpAgent();   
 	$('body').css('cursor', 'none');
 }
 
 function gameOver(){
+    isSpawning = false;
     pauseTimer();
-    toggleEnemyGeneration(false);
     $("#score").val(timerVal);
     $("#Q").html("");
-    g_agent.el.fillStyle = "green";
-    g_agent.el.fillRect(0, 0, 0, 0);
     canvas.Sound.stop("soundTrack");
     $(".highscore").fadeIn("slow");
     $("#startbutton").html("RETRY");
     $("#startbutton").fadeIn("slow");
+    //$('body').css('cursor', 'none');
     $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
 }
-
-
-
-
-
-
-//the game set up
-
 var canvas = CE.defines("gameFrame").
     extend(Input).
     extend(Hit).
@@ -88,22 +139,21 @@ var canvas = CE.defines("gameFrame").
 canvas.Scene.new({
     name: "gameScene",
     materials: {
+
 		sounds: {
 		    soundTrack: "../assets/audio/SoundtrackGLHF.mp3"
-		},
-		images: {
-		    ufo: "../assets/img/ufo.gif"
 		}
 	},
 	called: function(stage) {
-		//$("#gameFrame").height($(window).height()).width($(window).width());
-	},
+		$("#gameFrame").height($(window).height()).width($(window).width());
+	},/*
+	preload: function(stage, pourcent, material){
+
+	},*/
 	ready: function(stage) {
 	    var con = this;
 	    var thisCanvas = this.getCanvas();
 
-
-        //add an enemy here
 		function addEntities(x, y, self, type) {
 
 	        var entity = Class.New("Entity", [stage]);
@@ -112,8 +162,6 @@ canvas.Scene.new({
 	        var entColor = "red";
 	        var speed = -1; //default
 	        //{"NWB":0, "SBQ":0, "BWG":0, "SWP":0, "SCO":0};
-	        
-	        //set color, direction, spawn location here
 	        switch(type){
 	            case "NWB":
 	                entColor = "brown";
@@ -145,9 +193,11 @@ canvas.Scene.new({
 	        entity.el.T = type;
 
             stage.append(entity.el);
+            var speed = Math.floor(Math.random() * 10) + 1;
             enemyPool.push(entity);
 	        return entity;
 	     }
+
 
 
 
@@ -157,64 +207,66 @@ canvas.Scene.new({
 	     this.agent.rect(40); // square
          this.agent.position(mouseX, mouseY);
          this.agent.el = this.createElement(40, 40);
+	     this.agent.el.fillStyle = "yellow";
+	     this.agent.el.fillRect(0, 0, 0, 0);
 	     g_agent = this.agent;
 	     stage.append(this.agent.el);
 
-	    //multi thread
-	    $(document).keypress(function(e) {
-            if(String.fromCharCode(e.which)!= cList[g_index]){
-               isWaitingAnswer = false;
-               gameOver();
-            }else{ //correct
-                isWaitingAnswer = false;
-                $("#Q").html("");
-             }
-        });
+	        //multi thread
 
-        function come(){
-            
-                var top = Math.floor(Math.random() * $(window).height()) + 0;
-                var left = $(window).width();
-                var distrubution = new Array();
-                var total = 0;
-    	     
-                for (var i in enemyTally){
-    	            total += enemyTally[i];
-    	            for(var j = 0; j < enemyTally[i]; j++){
-    	                 distrubution.push(i);
+	        $(document).keypress(function(e) {
+                            if(String.fromCharCode(e.which)!= cList[g_index]){
+                                //alert(String.fromCharCode(e.which));
+                                charOptimal = false;
+                                gameOver();
+                            }else{ //correct
+                                charOptimal = false;
+                                $("#Q").html("");
+                            }
+                        });
+
+            function come(){
+                if(isSpawning){
+	                var top = Math.floor(Math.random() * $(window).height()) + 0;
+    	            var left = $(window).width();
+    	            var distrubution = new Array();
+    	            var total = 0;
+
+    	            for (var i in enemyTally){
+    	                total += enemyTally[i];
+    	                distrubution.push(i);
     	            }
-    	         }
-    	         var rand = Math.floor(Math.random() * total);
-    	         addEntities(left, top, con, distrubution[rand]);
-            
-        }
+    	            var rand = Math.floor(Math.random() * total);
 
-        function ask(){
-                if (isWaitingAnswer){ //taking too long
-                    isWaitingAnswer = false;
-                    gameOver();
-                }else{
-                   isWaitingAnswer = true;
-                   g_index = Math.floor(Math.random() * (qList.length-1));
-        	       $("#Q").html(qList[g_index]);
-                }
-  
-        }
-     
-        //secondary game loop
-        (function repeatE() {
-            if(isSpawning){
+    	            addEntities(left, top, con, distrubution[rand]);
+    	            addEntities(left, top, con, distrubution[rand]);
+	            }
+            };
+
+            function ask(){
+
+                if(isSpawning){
+                    if (charOptimal){ //taking too long
+                        charOptimal = false;
+                        gameOver();
+                    }else{
+                        charOptimal = true;
+                        g_index = Math.floor(Math.random() * (qList.length-1));
+    	                $("#Q").html(qList[g_index]);
+                    }
+	            }else{
+	                return;
+	            }
+            };
+            (function repeatE() {
                 come();
-            }
-            timeout = setTimeout(repeatE, enemyStreamFreq);
-        })();
+                timeout = setTimeout(repeatE, enemyStreamFreq);
+            })();
 
-        (function repeatQ() {
-           if(isSpawning){
+            (function repeatQ() {
                 ask();
-            }
-            timeoutq = setTimeout(repeatQ, questionFreq);
-        })();
+                timeoutq = setTimeout(repeatQ, questionFreq);
+            })();
 
 
 
@@ -222,17 +274,16 @@ canvas.Scene.new({
 
 	render: function(stage){
 	    updateMouse();
-        this.agent.position(mouseX, Math.pow(mouseY, 1));
+        this.agent.position(mouseX, mouseY);
 
         var self = this;
 	    //alert(enemyCurvePool.length);
 	    for (var i = 0; i < enemyCurvePool.length; i++){
 
 	        var curvePath = Math.floor(Math.random() * 3.14) + 0;
-	        var speed = 0.3;
+	        var speed = 0.1;
 	        var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, false);
-	        
-	        //set curve, speed
+	        //alert(enemyPool[i].el.T);
 	        switch(enemyPool[i].el.T){
 	            case "NWB":
 	                break;
@@ -242,21 +293,18 @@ canvas.Scene.new({
 	                update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, false);
 	                break;
 	            case "BWG":
+	                speed = 0.1;
 	                update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, true);
 	                x = 0;
 	                break;
 	            case "SWP":
-	                var speed = 0.1;
-	                var amp = Math.floor(Math.random() * 20.0) + 15.0;
-	                update = curveWithFunction(enemyCurvePool[i][0], enemyCurvePool[i][1], amp, speed, "sin", false, false);
 	                break;
 	            case "SCO":
-	                var speed = 0.01;
-	                update = curveWithFunction(enemyCurvePool[i][0], enemyCurvePool[i][1], 30.0, speed, "normal", false, true);
 	                break;
 	            default:
 	                break;
 	       }
+
 
 
 	       enemyCurvePool[i][0] = update[0];
@@ -264,21 +312,19 @@ canvas.Scene.new({
     	   enemyPool[i].move(update[0], update[1]); // x += 5;
     	   enemyPool[i].hit([this.agent], function(state, el) {
                if (state == "over") {
-                    
+                    self.agent.el.fillStyle = "green";
+                    self.agent.el.fillRect(0, 0, 0, 0);
                     enemyTally[el.T]++; //learning
                     gameOver();
                 }
            });
+    	   //alert(update[0]+","+ update[1]);
     	}
 
     	stage.refresh();
 	}
 });
 
-
-
-
-//mechs
 function updateMouse(){
     $(document).mousemove(function(e) {
         mouseX = e.pageX;
@@ -306,37 +352,16 @@ function curve(x, y, p_curve, rate, reverse){
 
 }
 
-function curveWithFunction(x, y, amp, speed, func, reverse, speedChange){
-    var g_track = new Array();
-    
-    if(speedChange){
-        if(!reverse){
-            g_track[0] = x - (speed * (Math.floor(Math.random() * amp) + 1));
-        }else{
-            g_track[0] = x + (speed * (Math.floor(Math.random() * amp) + 1));
-        }
-    }else{
-        if(!reverse){
-            g_track[0] = x - speed;
-        }else{
-            g_track[0] = x + speed;
-        }
-    }
-    
-    switch (func) {
-        case "sin":
-            g_track[1] = amp *  Math.sin(x);
-            break;
-        default:
-            g_track[1] = y;
-            break;
-    }
-   
-    return g_track;
-}
 
 
 
+
+
+
+
+//enemyGenerate();
+
+//timer
 
 var stopwatch;
 
@@ -353,9 +378,7 @@ function pauseTimer(){
 window.timerVal;
 function updateDisplay() {
     timerVal = parseInt($('#timer').find('.value').text(), 10);
-    if(isSpawning){
-         timerVal++;
-    }
+    timerVal++;
     $('#timer').find('.value').text(timerVal);
 }
 
