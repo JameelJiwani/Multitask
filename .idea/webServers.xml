@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="2cdc6ed8-02c7-4012-ae0f-93471d38ee75" name="hackathon" url="http://45.55.217.71">
+        <fileTransfer host="45.55.217.71" port="22" rootFolder="/srv/users/serverpilot" accessType="SFTP" password="dfcddf92dfc8df93dfccdf9cdfdedf99dfde" username="serverpilot">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

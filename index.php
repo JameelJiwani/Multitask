@@ -1,23 +1,3 @@
-<?php
-// $servername = "localhost";
-// $username = "d41d0e3bc160";
-// $password = "b5845cf8776fd5c0";
-// $dbname = "leaderboards";
-
-// $score = $_POST["score"];
-// $userName = $_GET["highscoreName"];
-
-// $conn = mysqli_connect($servername, $username, $password, $dbname);
-// if (!$conn) {
-//     die("Connection failed: " . mysqli_connect_error());
-// }
-
-// $sql = "INSERT INTO user (score, userName)
-// VALUES ($score, '$userName)";
-
-// mysqli_close($conn);
-
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,12 +15,14 @@
         <div class="buttonContainer">
             <button type="button" id="startbutton" onclick="gameStart()">BEGIN</button>
         </div>
+        <div id="leaderboard" class=""></div>
         <div class="highscore">
             <h4>Submit your highscore!</h4>
-            <form name="highScoreSubmit" method="GET" action="<?php $_PHP_SELF ?>">
-                <input type="text" name="highscoreName">
+            <form name="highScoreSubmit" id="highScoreSubmit" method="POST" action="submitScore.php">
+                <span id="result"></span>
+                <input type="text" name="highscoreName" id="highscoreName" required>
                 <input id="score" type="hidden" name="score">
-                <button type="submit" id="submit" >SUBMIT</button>
+                <button type="submit" id="submit" onclick"leaderboard()">SUBMIT</button>
             </form>
         </div>
         <h3 id="synopsis">For an enhanced experience, wear headphones.</h3>
@@ -61,6 +43,43 @@
                // $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
             });
         });
+
+        $("#submit").click( function() {
+            $.post( $("#highScoreSubmit").attr("action"),
+                $("#highScoreSubmit :input").serializeArray(),
+                function(info){
+                    $("#result").html(info);
+                });
+            leaderboard();
+            clearInput();
+        });
+
+        $("#highScoreSubmit").submit( function() {
+            return false;
+        });
+        function clearInput() {
+            $("#highScoreSubmit :input").each( function() {
+                $(this).val('');
+            });
+        }
+
+        function leaderboard() {
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("leaderboard").innerHTML = xmlhttp.responseText;
+                }
+            };
+            xmlhttp.open("POST","getScores.php",true);
+            xmlhttp.send();
+        }
+
     </script>
 </body>
 </html>

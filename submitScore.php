@@ -1,8 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "d41d0e3bc160";
-$password = "b5845cf8776fd5c0";
-$dbname = "leaderboards";
+
+include 'db.php';
 
 $score = $_POST["score"];
 $userName = $_POST["highscoreName"];

@@ -20,6 +20,30 @@ body{
   align-items: center;
 }
 
+.leaderboards {
+    z-index: 300;
+    width: 50vw;
+    height: 100vh;
+}
+
+.leaderboards table {
+    border: 0;
+    border: solid 2px #6496c8;
+    width: 50vw;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border-color: #6496c8;
+    outline: none;
+    height: 5vh;
+}
+
+.leaderboards table tr td {
+    border: 0;
+    border: solid 2px #6496c8;
+    border-color: #6496c8;
+    border-style: none none solid;
+}
+
 .highscore {
     z-index: 300;
     width: 50vw;
