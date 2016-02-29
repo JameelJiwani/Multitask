@@ -27,7 +27,6 @@ body{
   align-items: center;
 }
 
-<<<<<<< HEAD
 .leaderboards {
     z-index: 300;
     width: 50vw;
@@ -51,8 +50,6 @@ body{
     border-color: #6496c8;
     border-style: none none solid;
 }
-=======
->>>>>>> origin/master
 
 .highscore {
     z-index: 300;
