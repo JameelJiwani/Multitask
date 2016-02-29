@@ -1,7 +1,6 @@
 <?php
 
 include 'db.php';
-
 $score = $_POST["score"];
 $userName = $_POST["highscoreName"];
 

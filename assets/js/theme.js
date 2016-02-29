@@ -1,6 +1,6 @@
 var enemyStreamline;
 var enemyStreamFreq = 300;
-var questionFreq = 3000;
+var questionFreq = 10000;
 var isSpawning = false;
 var enemyPool = new Array();
 var enemyCurvePool = new Array();
@@ -58,18 +58,16 @@ function gameStart(){
 }
 
 function gameOver(){
-    pauseTimer();
+    pauseTimer()
     toggleEnemyGeneration(false);
     $("#score").val(timerVal);
     $("#Q").html("");
     g_agent.el.fillStyle = "green";
     g_agent.el.fillRect(0, 0, 0, 0);
     canvas.Sound.stop("soundTrack");
-    $(".highscore").fadeIn("slow");
+    $(".highscore").fadeTo("slow", 1.0);
     $("#startbutton").html("RETRY");
     $("#startbutton").fadeIn("slow");
-    $('#leaderboard').addClass('leaderboards');
-    $('#leaderboard').fadeIn("slow");
     $('body').css('cursor', 'url(assets/img/favicon.ico), auto');
 }
 
@@ -210,6 +208,7 @@ canvas.Scene.new({
             }
             timeout = setTimeout(repeatE, enemyStreamFreq);
         })();
+
 
         (function repeatQ() {
             if(isSpawning){

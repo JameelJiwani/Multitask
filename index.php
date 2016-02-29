@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="./assets/canvasengine/canvasengine-1.3.2.all.min.js"></script>
-    <link rel=stylesheet type=text/css href="assets/css/theme.css">
-    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <script src="//fast.eager.io/DNZjoLbvuK.js"></script>
+    <script type="text/javascript" src="./assets/js/utilities.js"></script>
+    <script type="text/javascript" src="./assets/js/theme.js"></script>
+    <link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+    <link rel=stylesheet type=text/css href="./assets/css/theme.css">
     <title>M U L T I T A S K</title>
 </head>
 <body>
     <div id="gameContainer">
-        <canvas id="gameFrame" width="1440" height="1080"></canvas>
+        <script type="text/javascript">
+            $( "#gameContainer" ).prepend( "<canvas id='gameFrame' width="+ window.innerWidth +" height="+ window.innerHeight + "></canvas>" );
+        </script>
             <p id="gameName">M U L T I T A S K</p>
             <div id="timer"><span class="value">0</span></div>
             <p id="Q"></p>
@@ -22,7 +28,7 @@
                 <span id="result"></span>
                 <input type="text" name="highscoreName" id="highscoreName" required>
                 <input id="score" type="hidden" name="score">
-                <button type="submit" id="submit" onclick"leaderboard()">SUBMIT</button>
+                <button type="submit" id="submit">SUBMIT</button>
             </form>
         </div>
         <h3 id="synopsis">For an enhanced experience, wear headphones.</h3>
@@ -32,11 +38,12 @@
     <script type="text/javascript" src="assets/js/theme.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
+        generateCapitalQuestions();
         $(document).ready(function(){
             $("button").click(function(){
                 $("#startbutton").fadeOut("slow");
                 $("#synopsis").fadeOut("slow");
-                $(".highscore").fadeOut("slow");
+                $(".highscore").fadeTo("slow", 0);
                 $("#gameName").fadeOut("slow");
                 $("#aboutUs").fadeOut("slow");
                 $("#timer").css("opacity", "1");
@@ -47,9 +54,9 @@
         $("#submit").click( function() {
             $.post( $("#highScoreSubmit").attr("action"),
                 $("#highScoreSubmit :input").serializeArray(),
-                function(info){
-                    $("#result").html(info);
-                });
+                    function(info){
+                        $("#result").html(info);
+                    });
             leaderboard();
             clearInput();
         });
@@ -57,6 +64,7 @@
         $("#highScoreSubmit").submit( function() {
             return false;
         });
+
         function clearInput() {
             $("#highScoreSubmit :input").each( function() {
                 $(this).val('');

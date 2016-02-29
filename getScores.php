@@ -15,6 +15,11 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$sql="SELECT * FROM `user` ORDER BY `userID` DESC limit 1";
+$result = mysqli_query($conn,$sql);
+$row = mysqli_fetch_array($result);
+$userID = $row['userID'];
+
 $sql="SELECT * FROM `user` ORDER BY `score` DESC limit 10";
 $result = mysqli_query($conn,$sql);
 
@@ -33,17 +38,25 @@ while($row = mysqli_fetch_array($result)) {
     echo "</tr>";
 }
 
+$sql = "SELECT * FROM (
+                SELECT t.userID,
+                  t.userName,
+                  t.score,
+                  @rownum := @rownum + 1 AS position
+                FROM user t
+                JOIN (SELECT @rownum := 0) r
+                ORDER BY t.score DESC
+          ) result
+          WHERE result.userID = ' " . $userID . " ' ";
+$result = mysqli_query($conn, $sql);
 
-$sql="SELECT * FROM `user` ORDER BY `userID` DESC limit 1";
-$result = mysqli_query($conn,$sql);
+$row = mysqli_fetch_array($result);
 
-while($row = mysqli_fetch_array($result)) {
-    echo "<tr style='background-color:blue'>";
-    echo "<td> Good Job! </td>";
+    echo "<tr>";
+    echo "<td>" . $row['position'] . "</td>";
     echo "<td>" . $row['userName'] . "</td>";
     echo "<td>" . $row['score'] . "</td>";
     echo "</tr>";
-}
 
 echo "</table>";
 
