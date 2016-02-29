@@ -335,6 +335,10 @@ function curveWithFunction(x, y, amp, speed, func, reverse, speedChange){
 
     return g_track;
 }
+
+
+
+
 var stopwatch;
 
 function startTimer(){
@@ -352,7 +356,6 @@ function updateDisplay() {
     timerVal = parseInt($('#timer').find('.value').text(), 10);
     if(isSpawning){
         timerVal++;
-    }
     }
     $('#timer').find('.value').text(timerVal);
 }
