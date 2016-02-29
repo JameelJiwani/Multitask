@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="130ac5c2-2f06-4d93-9035-7a4488f6102a" name="Default" comment="Added a leaderboard feature. When game is over, top 10 is displayed + the users highscore and relative ranking. Made changes in the css to accomodate for the leaderboard table but the styling of the table is still incomplete">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/themeCOPY2.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/theme.css" afterPath="$PROJECT_DIR$/assets/css/theme.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/js/theme.js" afterPath="$PROJECT_DIR$/assets/js/theme.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.codekit" afterPath="$PROJECT_DIR$/config.codekit" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
     </list>
     <ignored path="hfgl.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,8 +67,18 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.901961">
-              <caret line="69" column="32" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="theme.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/js/theme.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.1509677">
+              <caret line="363" column="0" selection-start-line="363" selection-start-column="0" selection-end-line="363" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -76,20 +90,20 @@
             <state vertical-scroll-proportion="-2.8846154">
               <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
               <folding>
-                <marker date="1456732669000" expanded="true" signature="282:333" placeholder="SELECT * FRO..user..." />
-                <marker date="1456732669000" expanded="true" signature="441:483" placeholder="SELECT * FRO..user..." />
-                <marker date="1456732669000" expanded="true" signature="441:492" placeholder="SELECT * FRO..user..." />
-                <marker date="1456732669000" expanded="true" signature="544:598" placeholder="..." />
-                <marker date="1456732669000" expanded="true" signature="545:598" placeholder="..." />
-                <marker date="1456732669000" expanded="true" signature="549:598" placeholder="..." />
-                <marker date="1456732669000" expanded="true" signature="819:1141" placeholder="SELECT * FRO..userID..." />
-                <marker date="1456732669000" expanded="true" signature="819:1156" placeholder="SELECT * FRO..userID..." />
-                <marker date="1456732669000" expanded="true" signature="819:1159" placeholder="SELECT * FRO..userID..." />
-                <marker date="1456732669000" expanded="true" signature="819:1198" placeholder="SELECT * FRO..userID..." />
-                <marker date="1456732669000" expanded="true" signature="819:1278" placeholder="SELECT * FRO..userID..." />
-                <marker date="1456732669000" expanded="true" signature="851:1088" placeholder="SELECT t.use..." />
-                <marker date="1456732669000" expanded="true" signature="1197:1198" placeholder="SELECT `id`,..table..." />
-                <marker date="1456732669000" expanded="true" signature="1251:1277" placeholder="..." />
+                <marker date="1456736043000" expanded="true" signature="282:333" placeholder="SELECT * FRO..user..." />
+                <marker date="1456736043000" expanded="true" signature="441:483" placeholder="SELECT * FRO..user..." />
+                <marker date="1456736043000" expanded="true" signature="441:492" placeholder="SELECT * FRO..user..." />
+                <marker date="1456736043000" expanded="true" signature="544:598" placeholder="..." />
+                <marker date="1456736043000" expanded="true" signature="545:598" placeholder="..." />
+                <marker date="1456736043000" expanded="true" signature="549:598" placeholder="..." />
+                <marker date="1456736043000" expanded="true" signature="819:1141" placeholder="SELECT * FRO..userID..." />
+                <marker date="1456736043000" expanded="true" signature="819:1156" placeholder="SELECT * FRO..userID..." />
+                <marker date="1456736043000" expanded="true" signature="819:1159" placeholder="SELECT * FRO..userID..." />
+                <marker date="1456736043000" expanded="true" signature="819:1198" placeholder="SELECT * FRO..userID..." />
+                <marker date="1456736043000" expanded="true" signature="819:1278" placeholder="SELECT * FRO..userID..." />
+                <marker date="1456736043000" expanded="true" signature="851:1088" placeholder="SELECT t.use..." />
+                <marker date="1456736043000" expanded="true" signature="1197:1198" placeholder="SELECT `id`,..table..." />
+                <marker date="1456736043000" expanded="true" signature="1251:1277" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -105,7 +119,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hfgl.iml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hfgl.iml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hfgl.iml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
@@ -143,11 +157,12 @@
         <option value="$PROJECT_DIR$/db.php" />
         <option value="$PROJECT_DIR$/assets/css/theme.css" />
         <option value="$PROJECT_DIR$/assets/js/theme.js" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/22958433-5315-43fe-9446-7eab518af5ac/console.sql" />
         <option value="$PROJECT_DIR$/submitScore.php" />
         <option value="$PROJECT_DIR$/getScores.php" />
         <option value="$PROJECT_DIR$/assets/js/min/theme-min.js" />
+        <option value="$PROJECT_DIR$/hfgl.iml" />
+        <option value="$PROJECT_DIR$/index.php" />
       </list>
     </option>
   </component>
@@ -707,7 +722,7 @@
       <workItem from="1454448323757" duration="12023000" />
       <workItem from="1454970519434" duration="1118000" />
       <workItem from="1455332547379" duration="235000" />
-      <workItem from="1456539390960" duration="12369000" />
+      <workItem from="1456539390960" duration="12651000" />
     </task>
     <task id="LOCAL-00001" summary="Added a leaderboard feature. When game is over, top 10 is displayed + the users highscore and relative ranking. Made changes in the css to accomodate for the leaderboard table but the styling of the table is still incomplete">
       <created>1456735468919</created>
@@ -719,7 +734,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25745000" />
+    <option name="totallyTimeSpent" value="26027000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -855,20 +870,20 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="50" selection-start-line="39" selection-start-column="50" selection-end-line="39" selection-end-column="50" />
           <folding>
-            <marker date="1456732669000" expanded="true" signature="282:333" placeholder="SELECT * FRO..user..." />
-            <marker date="1456732669000" expanded="true" signature="441:483" placeholder="SELECT * FRO..user..." />
-            <marker date="1456732669000" expanded="true" signature="441:492" placeholder="SELECT * FRO..user..." />
-            <marker date="1456732669000" expanded="true" signature="544:598" placeholder="..." />
-            <marker date="1456732669000" expanded="true" signature="545:598" placeholder="..." />
-            <marker date="1456732669000" expanded="true" signature="549:598" placeholder="..." />
-            <marker date="1456732669000" expanded="true" signature="819:1141" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="819:1156" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="819:1159" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="819:1198" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="819:1278" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="851:1088" placeholder="SELECT t.use..." />
-            <marker date="1456732669000" expanded="true" signature="1197:1198" placeholder="SELECT `id`,..table..." />
-            <marker date="1456732669000" expanded="true" signature="1251:1277" placeholder="..." />
+            <marker date="1456736043000" expanded="true" signature="282:333" placeholder="SELECT * FRO..user..." />
+            <marker date="1456736043000" expanded="true" signature="441:483" placeholder="SELECT * FRO..user..." />
+            <marker date="1456736043000" expanded="true" signature="441:492" placeholder="SELECT * FRO..user..." />
+            <marker date="1456736043000" expanded="true" signature="544:598" placeholder="..." />
+            <marker date="1456736043000" expanded="true" signature="545:598" placeholder="..." />
+            <marker date="1456736043000" expanded="true" signature="549:598" placeholder="..." />
+            <marker date="1456736043000" expanded="true" signature="819:1141" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="819:1156" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="819:1159" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="819:1198" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="819:1278" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="851:1088" placeholder="SELECT t.use..." />
+            <marker date="1456736043000" expanded="true" signature="1197:1198" placeholder="SELECT `id`,..table..." />
+            <marker date="1456736043000" expanded="true" signature="1251:1277" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -878,7 +893,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
           <folding>
-            <marker date="1456636401000" expanded="true" signature="239:304" placeholder="INSERT INTO user..." />
+            <marker date="1456736043000" expanded="true" signature="239:304" placeholder="INSERT INTO user..." />
           </folding>
         </state>
       </provider>
@@ -913,28 +928,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/theme.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.8233085">
-          <caret line="363" column="40" selection-start-line="363" selection-start-column="40" selection-end-line="363" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.901961">
-          <caret line="69" column="32" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/submitScore.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17352185">
           <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
           <folding>
-            <marker date="1456636401000" expanded="true" signature="239:304" placeholder="INSERT INTO user..." />
+            <marker date="1456736043000" expanded="true" signature="239:304" placeholder="INSERT INTO user..." />
           </folding>
         </state>
       </provider>
@@ -957,20 +956,20 @@
         <state vertical-scroll-proportion="-2.8846154">
           <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
           <folding>
-            <marker date="1456732669000" expanded="true" signature="282:333" placeholder="SELECT * FRO..user..." />
-            <marker date="1456732669000" expanded="true" signature="441:483" placeholder="SELECT * FRO..user..." />
-            <marker date="1456732669000" expanded="true" signature="441:492" placeholder="SELECT * FRO..user..." />
-            <marker date="1456732669000" expanded="true" signature="544:598" placeholder="..." />
-            <marker date="1456732669000" expanded="true" signature="545:598" placeholder="..." />
-            <marker date="1456732669000" expanded="true" signature="549:598" placeholder="..." />
-            <marker date="1456732669000" expanded="true" signature="819:1141" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="819:1156" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="819:1159" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="819:1198" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="819:1278" placeholder="SELECT * FRO..userID..." />
-            <marker date="1456732669000" expanded="true" signature="851:1088" placeholder="SELECT t.use..." />
-            <marker date="1456732669000" expanded="true" signature="1197:1198" placeholder="SELECT `id`,..table..." />
-            <marker date="1456732669000" expanded="true" signature="1251:1277" placeholder="..." />
+            <marker date="1456736043000" expanded="true" signature="282:333" placeholder="SELECT * FRO..user..." />
+            <marker date="1456736043000" expanded="true" signature="441:483" placeholder="SELECT * FRO..user..." />
+            <marker date="1456736043000" expanded="true" signature="441:492" placeholder="SELECT * FRO..user..." />
+            <marker date="1456736043000" expanded="true" signature="544:598" placeholder="..." />
+            <marker date="1456736043000" expanded="true" signature="545:598" placeholder="..." />
+            <marker date="1456736043000" expanded="true" signature="549:598" placeholder="..." />
+            <marker date="1456736043000" expanded="true" signature="819:1141" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="819:1156" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="819:1159" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="819:1198" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="819:1278" placeholder="SELECT * FRO..userID..." />
+            <marker date="1456736043000" expanded="true" signature="851:1088" placeholder="SELECT t.use..." />
+            <marker date="1456736043000" expanded="true" signature="1197:1198" placeholder="SELECT `id`,..table..." />
+            <marker date="1456736043000" expanded="true" signature="1251:1277" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1035,6 +1034,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/theme.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1509677">
+          <caret line="363" column="0" selection-start-line="363" selection-start-column="0" selection-end-line="363" selection-end-column="0" />
           <folding />
         </state>
       </provider>

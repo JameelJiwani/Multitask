@@ -1,6 +1,13 @@
 @font-face {
-    font-family: Aleo;
-    src: url(../fonts/aleo/Aleo-Regular.otf);
+    font-family: aleo;
+    src: url("../fonts/aleo/Aleo-Regular.otf");
+}
+
+#gameFrame{
+    position: absolute;
+    z-index: 1;
+    top:0px;
+    left:0px;
 }
 
 body{
@@ -9,10 +16,10 @@ body{
 }
 
 #gameContainer {
-  position: absolute;
-  background-image: url(/assets/img/pink_rice.png);
-  text-align: center;
   display: flex;
+  position: absolute;
+  background-image: url("../img/pink_rice.png");
+  text-align: center;
   height: 100vh;
   width: 100vw;
   flex-direction: column;
@@ -20,6 +27,7 @@ body{
   align-items: center;
 }
 
+<<<<<<< HEAD
 .leaderboards {
     z-index: 300;
     width: 50vw;
@@ -43,6 +51,8 @@ body{
     border-color: #6496c8;
     border-style: none none solid;
 }
+=======
+>>>>>>> origin/master
 
 .highscore {
     z-index: 300;
@@ -137,12 +147,6 @@ body{
 	-webkit-animation-timing-function: linear;
 }
 
-#gameFrame{
-    position: fixed;
-    z-index: 1;
-    top:0px;
-    left:0px;
-}
 
 #gameName{
     position: absolute;

@@ -40,7 +40,11 @@ function paintAgent(){
     g_agent.el.fillStyle = "yellow";
     //g_agent.el.drawImage("ufo");
     //g_agent.el.setOriginPosition("middle");
+<<<<<<< HEAD
     g_agent.el.fillRect(0, 0, 30, 30);
+=======
+	g_agent.el.fillRect(0, 0, 30, 30);
+>>>>>>> origin/master
 }
 
 function toggleEnemyGeneration(status){
@@ -52,6 +56,7 @@ function gameStart(){
     startTimer();
     toggleEnemyGeneration(true);
     playMusic();
+<<<<<<< HEAD
     paintAgent();
     isWaitingAnswer = false;
     $('body').css('cursor', 'none');
@@ -59,6 +64,15 @@ function gameStart(){
 
 function gameOver(){
     pauseTimer()
+=======
+    paintAgent();   
+    isWaitingAnswer = false;
+	$('body').css('cursor', 'none');
+}
+
+function gameOver(){
+    pauseTimer();
+>>>>>>> origin/master
     toggleEnemyGeneration(false);
     $("#score").val(timerVal);
     $("#Q").html("");
@@ -88,6 +102,7 @@ ready(function() {
 canvas.Scene.new({
     name: "gameScene",
     materials: {
+<<<<<<< HEAD
         sounds: {
             soundTrack: "../assets/audio/SoundtrackGLHF.mp3"
         },
@@ -212,6 +227,132 @@ canvas.Scene.new({
 
         (function repeatQ() {
             if(isSpawning){
+=======
+		sounds: {
+		    soundTrack: "../assets/audio/SoundtrackGLHF.mp3"
+		},
+		images: {
+		    ufo: "../assets/img/ufo.gif"
+		}
+	},
+	called: function(stage) {
+		//$("#gameFrame").height($(window).height()).width($(window).width());
+	},
+	ready: function(stage) {
+	    var con = this;
+	    var thisCanvas = this.getCanvas();
+
+
+        //add an enemy here
+		function addEntities(x, y, self, type) {
+
+	        var entity = Class.New("Entity", [stage]);
+	        entity.rect(40); // square
+
+	        var entColor = "red";
+	        var speed = -1; //default
+	        //{"NWB":0, "SBQ":0, "BWG":0, "SWP":0, "SCO":0};
+	        
+	        //set color, direction, spawn location here
+	        switch(type){
+	            case "NWB":
+	                entColor = "brown";
+	                break;
+	            case "SBQ":
+	                entColor = "blue";
+	                break;
+	            case "BWG":
+	                entColor = "green";
+	                speed = 1;
+	                x = 0;
+	                break;
+	            case "SWP":
+	                entColor = "purple";
+	                break;
+	            case "SCO":
+	                entColor = "orange";
+	                break;
+	            default:
+	                entColor = "white";
+	                break;
+	        }
+
+	        enemyCurvePool.push([speed, 0]);
+	        entity.position(x, y);
+	        entity.el = self.createElement(40, 40);
+	        entity.el.fillStyle = entColor;
+	        entity.el.fillRect(0, 0, 40, 40);
+	        entity.el.T = type;
+
+            stage.append(entity.el);
+            enemyPool.push(entity);
+	        return entity;
+	     }
+
+
+
+	     //create agent
+	     updateMouse();
+	     this.agent = Class.New("Entity", [stage]);
+	     this.agent.rect(40); // square
+         this.agent.position(mouseX, mouseY);
+         this.agent.el = this.createElement(40, 40);
+	     g_agent = this.agent;
+	     stage.append(this.agent.el);
+
+	    //multi thread
+	    $(document).keypress(function(e) {
+            if(String.fromCharCode(e.which)!= cList[g_index]){
+               isWaitingAnswer = false;
+               gameOver();
+            }else{ //correct
+                isWaitingAnswer = false;
+                $("#Q").html("");
+             }
+        });
+
+        function come(){
+            
+                var top = Math.floor(Math.random() * $(window).height()) + 0;
+                var left = $(window).width();
+                var distrubution = new Array();
+                var total = 0;
+    	     
+                for (var i in enemyTally){
+    	            total += enemyTally[i];
+    	            for(var j = 0; j < enemyTally[i]; j++){
+    	                 distrubution.push(i);
+    	            }
+    	         }
+    	         var rand = Math.floor(Math.random() * total);
+    	         addEntities(left, top, con, distrubution[rand]);
+            
+        }
+
+        function ask(){
+                if (isWaitingAnswer){ //taking too long
+                    isWaitingAnswer = false;
+                    gameOver();
+                }else{
+                   isWaitingAnswer = true;
+                   g_index = Math.floor(Math.random() * (qList.length-1));
+        	       $("#Q").html(qList[g_index]);
+                }
+  
+        }
+     
+        //secondary game loop
+        (function repeatE() {
+            if(isSpawning){
+                come();
+            }
+            timeout = setTimeout(repeatE, enemyStreamFreq);
+        })();
+        
+        
+        (function repeatQ() {
+           if(isSpawning){
+>>>>>>> origin/master
                 ask();
             }
             timeoutq = setTimeout(repeatQ, questionFreq);
@@ -221,6 +362,7 @@ canvas.Scene.new({
 
     },
 
+<<<<<<< HEAD
     render: function(stage){
         updateMouse();
         this.agent.position(mouseX, Math.pow(mouseY, 1));
@@ -271,6 +413,58 @@ canvas.Scene.new({
                 }
             });
         }
+=======
+	render: function(stage){
+	    updateMouse();
+        this.agent.position(mouseX, Math.pow(mouseY, 1));
+
+        var self = this;
+	    //alert(enemyCurvePool.length);
+	    for (var i = 0; i < enemyCurvePool.length; i++){
+
+	        var curvePath = Math.floor(Math.random() * 3.14) + 0;
+	        var speed = 0.3;
+	        var update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, false);
+	        
+	        //set curve, speed
+	        switch(enemyPool[i].el.T){
+	            case "NWB":
+	                break;
+	            case "SBQ":
+	                curvePath = 3.1415/2;
+	                speed = 1;
+	                update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, false);
+	                break;
+	            case "BWG":
+	                update = curve(enemyCurvePool[i][0], enemyCurvePool[i][1], curvePath, speed, true);
+	                x = 0;
+	                break;
+	            case "SWP":
+	                var speed = 0.1;
+	                var amp = Math.floor(Math.random() * 20.0) + 15.0;
+	                update = curveWithFunction(enemyCurvePool[i][0], enemyCurvePool[i][1], amp, speed, "sin", false, false);
+	                break;
+	            case "SCO":
+	                var speed = 0.01;
+	                update = curveWithFunction(enemyCurvePool[i][0], enemyCurvePool[i][1], 30.0, speed, "normal", false, true);
+	                break;
+	            default:
+	                break;
+	       }
+
+
+	       enemyCurvePool[i][0] = update[0];
+	       enemyCurvePool[i][1] = update[1];
+    	   enemyPool[i].move(update[0], update[1]); // x += 5;
+    	   enemyPool[i].hit([this.agent], function(state, el) {
+               if (state == "over") {
+                    
+                    enemyTally[el.T]++; //learning
+                    gameOver();
+                }
+           });
+    	}
+>>>>>>> origin/master
 
         stage.refresh();
     }
@@ -309,7 +503,11 @@ function curve(x, y, p_curve, rate, reverse){
 
 function curveWithFunction(x, y, amp, speed, func, reverse, speedChange){
     var g_track = new Array();
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/master
     if(speedChange){
         if(!reverse){
             g_track[0] = x - (speed * (Math.floor(Math.random() * amp) + 1));
@@ -323,6 +521,22 @@ function curveWithFunction(x, y, amp, speed, func, reverse, speedChange){
             g_track[0] = x + speed;
         }
     }
+<<<<<<< HEAD
+=======
+    
+    switch (func) {
+        case "sin":
+            g_track[1] = amp *  Math.sin(x);
+            break;
+        default:
+            g_track[1] = y;
+            break;
+    }
+   
+    return g_track;
+}
+
+>>>>>>> origin/master
 
     switch (func) {
         case "sin":
@@ -336,9 +550,12 @@ function curveWithFunction(x, y, amp, speed, func, reverse, speedChange){
     return g_track;
 }
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> origin/master
 var stopwatch;
 
 function startTimer(){
@@ -355,7 +572,11 @@ window.timerVal;
 function updateDisplay() {
     timerVal = parseInt($('#timer').find('.value').text(), 10);
     if(isSpawning){
+<<<<<<< HEAD
         timerVal++;
+=======
+         timerVal++;
+>>>>>>> origin/master
     }
     $('#timer').find('.value').text(timerVal);
 }

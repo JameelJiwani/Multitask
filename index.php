@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -9,6 +10,7 @@
     <link rel="icon" type="image/png" href="./assets/img/favicon.ico">
     <link rel=stylesheet type=text/css href="./assets/css/theme.css">
     <title>M U L T I T A S K</title>
+
 </head>
 <body>
     <div id="gameContainer">
@@ -35,8 +37,8 @@
         <a href="aboutUs.php" id="aboutUs">A B O U T&nbsp;&nbsp;&nbsp;T H E&nbsp;&nbsp;&nbsp;D E V E L O P E R S</a>
     </div>
     
-    <script type="text/javascript" src="assets/js/theme.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    
     <script>
         generateCapitalQuestions();
         $(document).ready(function(){
